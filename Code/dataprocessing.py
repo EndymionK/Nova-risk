@@ -26,21 +26,25 @@ def calcular_probabilidad_nova_supernova(row):
         subclase = 0  # Valor por defecto para subclase
     
     # Calcular la probabilidad hipotética de nova o supernova
-    # Puedes ajustar esta fórmula según tus propios criterios
+
+    pesos_clase = {'0': 0.5, 'B': 0.4, 'A': 0.3, 'F': 0.2, 'G': 0.1, 'K': 0.05, 'M': 0.005, 'X': 0.0}
+    epsilon = 1e-6  # Valor muy pequeño para evitar división entre cero
+
     probabilidad_nova_supernova = (
-        (subclase * 0.3) +  # Contribución de la subclase
-        (magnitud_absoluta * 0.2) +  # Contribución de la magnitud absoluta
-        (velocidad_radial * 0.2) +  # Contribución de la velocidad radial
-        (luminosidad * 0.3)  # Contribución de la luminosidad
+        (subclase * 0.2) +  # Contribución de la subclase
+        ((1 / (magnitud_absoluta + epsilon)) * 0.2) +  # Contribución de la magnitud absoluta
+        (velocidad_radial * 0.05) +  # Contribución de la velocidad radial
+        (luminosidad * 0.1) +  # Contribución de la luminosidad
+        (pesos_clase.get(clase_principal, 0) * 0.3)  # Contribución de la clase principal
     )
     
     # Escalar la probabilidad a un valor entre 1 y 100
-    probabilidad_nova_supernova = max(1, min(100, probabilidad_nova_supernova))
+    probabilidad_nova_supernova = min(100, probabilidad_nova_supernova)
     
     return probabilidad_nova_supernova
 
 # Aplicar la función para calcular la probabilidad a cada fila del DataFrame
-df['probabilidad_nova_supernova'] = df.apply(calcular_probabilidad_nova_supernova, axis=1)
+df['p_supernova'] = df.apply(calcular_probabilidad_nova_supernova, axis=1)
 
 # Guardar el DataFrame modificado de nuevo en un archivo CSV
 df.to_csv('hygdatarisk.csv', index=False)
@@ -64,7 +68,7 @@ def analizar_columna_csv(nombre_archivo, nombre_columna):
 
         # Muestra los primeros 10 elementos de la columna
         print("Primeros 10 elementos de la columna:")
-        print(df[nombre_columna].head(15))
+        print(df[nombre_columna].head(25))
 
         # Verifica si hay espacios vacíos en la columna
         espacios_vacios = df[nombre_columna].isnull().sum()
@@ -77,6 +81,6 @@ def analizar_columna_csv(nombre_archivo, nombre_columna):
 
 # Llama a la función y proporciona el nombre del archivo CSV y el nombre de la columna
 nombre_archivo = 'C:/Proyectos programación/Nova-risk/Databases/hygdatarisk.csv'
-nombre_columna = 'spect'
+nombre_columna = 'p_supernova'
 analizar_columna_csv(nombre_archivo, nombre_columna)
 
