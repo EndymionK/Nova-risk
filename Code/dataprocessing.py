@@ -27,7 +27,7 @@ def calcular_probabilidad_nova_supernova(row):
     
     # Calcular la probabilidad hipotética de nova o supernova
 
-    pesos_clase = {'0': 0.5, 'B': 0.4, 'A': 0.3, 'F': 0.2, 'G': 0.1, 'K': 0.05, 'M': 0.005, 'X': 0.0}
+    pesos_clase = {'0': 20, 'B': 15, 'A': 10, 'F': 5, 'G': 2, 'K': 1, 'M': 0.5, 'X': 0.0}
     epsilon = 1e-6  # Valor muy pequeño para evitar división entre cero
 
     probabilidad_nova_supernova = (
@@ -39,8 +39,8 @@ def calcular_probabilidad_nova_supernova(row):
     )
     
     # Escalar la probabilidad a un valor entre 1 y 100
-    probabilidad_nova_supernova = min(100, probabilidad_nova_supernova)
-    
+    probabilidad_nova_supernova = max(0, min(100, probabilidad_nova_supernova))
+  
     return probabilidad_nova_supernova
 
 # Aplicar la función para calcular la probabilidad a cada fila del DataFrame
