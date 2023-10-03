@@ -66,8 +66,6 @@ def analizar_columna_csv(nombre_archivo, nombre_columna):
         # Carga el archivo CSV en un DataFrame de pandas
         df = pd.read_csv(nombre_archivo)
 
-        # Muestra los primeros 10 elementos de la columna
-        print("Primeros 10 elementos de la columna:")
         print(df[nombre_columna].head(25))
 
         # Verifica si hay espacios vacíos en la columna
