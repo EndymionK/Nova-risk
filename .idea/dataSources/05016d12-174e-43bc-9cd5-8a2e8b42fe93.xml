@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Nova-risk.nova-risk-project@cluster0.o9sl1ka.mongodb.net">
+  <database-model serializer="dbm" dbms="MONGO" family-id="MONGO" format-version="4.49">
+    <root id="1">
+      <ServerVersion>6.0.10</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="Nova-risk">
+      <Current>1</Current>
+    </schema>
+    <schema id="3" parent="1" name="admin"/>
+    <schema id="4" parent="1" name="local"/>
+  </database-model>
+</dataSource>

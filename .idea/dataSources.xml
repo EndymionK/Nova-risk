@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="Nova-risk.nova-risk-project@cluster0.o9sl1ka.mongodb.net" uuid="05016d12-174e-43bc-9cd5-8a2e8b42fe93">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb+srv://cluster0.o9sl1ka.mongodb.net/Nova-risk.nova-risk-project?retryWrites=true&amp;w=majority</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

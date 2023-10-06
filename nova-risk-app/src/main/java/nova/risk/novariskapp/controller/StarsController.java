@@ -1,5 +1,5 @@
 package nova.risk.novariskapp.controller;
-
+import org.springframework.web.bind.annotation.RestController;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
