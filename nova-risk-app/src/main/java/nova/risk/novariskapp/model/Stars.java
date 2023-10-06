@@ -4,17 +4,12 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 @Data
-
+@Document(collection = "Stars")
 public class Stars {
     @Id
-    private String id;
-    private double hip;
-    private double hd;
-    private double hr;
-    private String gl;
-    private String bf;
+    private String _id;
+    private int id;
     private String proper;
     private double ra;
     private double dec;
@@ -36,17 +31,9 @@ public class Stars {
     private double decrad;
     private double pmrarad;
     private double pmdecrad;
-    private String bayer;
-    private double flam;
-    private String con;
-    private long comp;
-    private long comp_primary;
-    private String base;
+    private int comp;
+    private int comp_primary;
     private double lum;
-    private String var;
-    private double var_min;
-    private double var_max;
-
-    private boolean completado;
+    private double p_supernova;
 
 }

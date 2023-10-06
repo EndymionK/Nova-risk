@@ -1,4 +1,5 @@
 package nova.risk.novariskapp.controller;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.RestController;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
@@ -21,13 +22,13 @@ public class StarsController {
     }
     @GetMapping("")
     List<Stars> index(){
+        System.out.println(starsRepository.findAll());
         return starsRepository.findAll();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     Stars create(@RequestBody Stars stars){
-
         return starsRepository.save(stars);
 
     }
@@ -37,11 +38,6 @@ public class StarsController {
 
         Stars starsFromDb = starsRepository.findById(id).orElseThrow(Exception::new);
 
-        starsFromDb.setHip(stars.getHip());
-        starsFromDb.setHd(stars.getHd());
-        starsFromDb.setHr(stars.getHr());
-        starsFromDb.setGl(stars.getGl());
-        starsFromDb.setBf(stars.getBf());
         starsFromDb.setProper(stars.getProper());
         starsFromDb.setRa(stars.getRa());
         starsFromDb.setDec(stars.getDec());
@@ -63,18 +59,10 @@ public class StarsController {
         starsFromDb.setDecrad(stars.getDecrad());
         starsFromDb.setPmrarad(stars.getPmrarad());
         starsFromDb.setPmdecrad(stars.getPmdecrad());
-        starsFromDb.setBayer(stars.getBayer());
-        starsFromDb.setFlam(stars.getFlam());
-        starsFromDb.setCon(stars.getCon());
         starsFromDb.setComp(stars.getComp());
         starsFromDb.setComp_primary(stars.getComp_primary());
-        starsFromDb.setBase(stars.getBase());
         starsFromDb.setLum(stars.getLum());
-        starsFromDb.setVar(stars.getVar());
-        starsFromDb.setVar_min(stars.getVar_min());
-        starsFromDb.setVar_max(stars.getVar_max());
-
-        starsFromDb.setCompletado(stars.isCompletado());
+        
 
         return starsRepository.save(starsFromDb);
 
