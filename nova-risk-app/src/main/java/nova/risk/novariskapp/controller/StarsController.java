@@ -1,11 +1,11 @@
 package nova.risk.novariskapp.controller;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.RestController;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -21,10 +21,12 @@ public class StarsController {
         this.starsRepository = starsRepository;
     }
     @GetMapping("")
-    List<Stars> index(){
-        System.out.println(starsRepository.findAll());
-        return starsRepository.findAll();
+    List<Stars> index() {
+        // Utiliza PageRequest para limitar la consulta a los primeros 10 elementos
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        return starsRepository.findAll(pageRequest).getContent();
     }
+
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
@@ -62,7 +64,7 @@ public class StarsController {
         starsFromDb.setComp(stars.getComp());
         starsFromDb.setComp_primary(stars.getComp_primary());
         starsFromDb.setLum(stars.getLum());
-        
+
 
         return starsRepository.save(starsFromDb);
 
