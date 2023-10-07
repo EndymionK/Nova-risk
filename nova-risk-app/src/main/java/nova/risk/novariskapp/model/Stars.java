@@ -1,6 +1,7 @@
 package nova.risk.novariskapp.model;
 
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,32 +9,43 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Stars")
 public class Stars {
     @Id
-    private String _id;
-    private int id;
+    private ObjectId _id;
+    private Double hip;
+    private Double hd;
+    private Double hr;
+    private String gl;
+    private String bf;
     private String proper;
-    private double ra;
-    private double dec;
-    private double dist;
-    private double pmra;
-    private double pmdec;
-    private double rv;
-    private double mag;
-    private double absmag;
+    private Double ra;
+    private Double dec;
+    private Double dist;
+    private Double pmra;
+    private Double pmdec;
+    private Double rv;
+    private Double mag;
+    private Double absmag;
     private String spect;
-    private double ci;
-    private double x;
-    private double y;
-    private double z;
-    private double vx;
-    private double vy;
-    private double vz;
-    private double rarad;
-    private double decrad;
-    private double pmrarad;
-    private double pmdecrad;
+    private String ci;
+    private Double x;
+    private Double y;
+    private Double z;
+    private Double vx;
+    private Double vy;
+    private Double vz;
+    private Double rarad;
+    private Double decrad;
+    private Double pmrarad;
+    private Double pmdecrad;
+    private String bayer;
+    private Double flam;
+    private String con;
     private int comp;
     private int comp_primary;
-    private double lum;
-    private double p_supernova;
+    private String base;
+    private Double lum;
+    private String var;
+    private Double var_min;
+    private Double var_max;
+    private Double p_supernova;
 
 }

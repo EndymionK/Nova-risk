@@ -40,6 +40,12 @@ public class StarsController {
 
         Stars starsFromDb = starsRepository.findById(id).orElseThrow(Exception::new);
 
+        starsFromDb.set_id(stars.get_id());
+        starsFromDb.setHip(stars.getHip());
+        starsFromDb.setHd(stars.getHd());
+        starsFromDb.setHr(stars.getHr());
+        starsFromDb.setGl(stars.getGl());
+        starsFromDb.setBf(stars.getBf());
         starsFromDb.setProper(stars.getProper());
         starsFromDb.setRa(stars.getRa());
         starsFromDb.setDec(stars.getDec());
@@ -61,9 +67,17 @@ public class StarsController {
         starsFromDb.setDecrad(stars.getDecrad());
         starsFromDb.setPmrarad(stars.getPmrarad());
         starsFromDb.setPmdecrad(stars.getPmdecrad());
+        starsFromDb.setBayer(stars.getBayer());
+        starsFromDb.setFlam(stars.getFlam());
+        starsFromDb.setCon(stars.getCon());
         starsFromDb.setComp(stars.getComp());
         starsFromDb.setComp_primary(stars.getComp_primary());
+        starsFromDb.setBase(stars.getBase());
         starsFromDb.setLum(stars.getLum());
+        starsFromDb.setVar(stars.getVar());
+        starsFromDb.setVar_min(stars.getVar_min());
+        starsFromDb.setVar_max(stars.getVar_max());
+        starsFromDb.setP_supernova(stars.getP_supernova());
 
 
         return starsRepository.save(starsFromDb);
