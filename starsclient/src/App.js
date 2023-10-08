@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import StarsList from './StarsList';
 import React from 'react';
+import StarsForm from './StarsForm';
 
 
 function App() {
@@ -31,12 +32,15 @@ function App() {
     <>
       <Container>
         <Row>
-          <Col>
+          <Col md={6}>
             {loading ? (
               <p>Loading...</p>
             ) : (
               <StarsList stars={stars} />
             )}
+          </Col>
+          <Col  md={6}>              
+              <StarsForm />
           </Col>
         </Row>
       </Container>
