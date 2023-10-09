@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Stars")
 public class Stars {
     @Id
-    private ObjectId _id;
+    private String _id;
     private Double hip;
     private Double hd;
     private Double hr;

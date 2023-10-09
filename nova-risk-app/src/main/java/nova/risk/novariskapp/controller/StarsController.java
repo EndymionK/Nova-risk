@@ -1,4 +1,5 @@
 package nova.risk.novariskapp.controller;
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.RestController;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
@@ -6,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -35,10 +37,10 @@ public class StarsController {
 
     }
 
-    @PutMapping("{id}")
-    Stars update(@PathVariable String id,@RequestBody Stars stars) throws Exception {
+    @PutMapping("/{_id}")
+    Stars update(@PathVariable String _id,@RequestBody Stars stars) throws Exception {
 
-        Stars starsFromDb = starsRepository.findById(id).orElseThrow(Exception::new);
+        Stars starsFromDb = starsRepository.findById(String.valueOf(_id)).orElseThrow(Exception::new);
 
         starsFromDb.set_id(stars.get_id());
         starsFromDb.setHip(stars.getHip());
@@ -84,11 +86,19 @@ public class StarsController {
 
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("{id}")
-    void delete(@PathVariable String id) throws Exception {
+    @DeleteMapping("/{_id}")
+    public ResponseEntity<?> deleteStar(@PathVariable ObjectId _id) {
+        try {
+            Stars star = starsRepository.findById(String.valueOf(_id)).orElse(null);
 
-        Stars stars = starsRepository.findById(id).orElseThrow(Exception::new);
-        starsRepository.delete(stars);
+            if (star != null) {
+                starsRepository.delete(star);
+                return ResponseEntity.noContent().build(); // Solicitud exitosa (204 No Content)
+            } else {
+                return ResponseEntity.notFound().build(); // No se encontró la estrella (404 Not Found)
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Error interno del servidor (500 Internal Server Error)
+        }
     }
 }

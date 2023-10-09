@@ -24,9 +24,22 @@ function App() {
       });
   };
 
+  const deleteStar = (_id) => {
+    axios.delete(`http://localhost:8080/Stars/${_id}`)
+      .then(() => loadStars())
+      .catch(error => console.log(error));
+  };
+    
+
   useEffect(() => {
     loadStars();
   }, []);
+
+  const createStar = (values) => {
+    axios.post('http://localhost:8080/Stars', values)
+      .then(() => loadStars())
+       
+  }
 
   return (
     <>
@@ -36,11 +49,11 @@ function App() {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              <StarsList stars={stars} />
+              <StarsList stars={stars} onDelete={deleteStar} />
             )}
           </Col>
           <Col  md={6}>              
-              <StarsForm />
+              <StarsForm createStar={createStar} />
           </Col>
         </Row>
       </Container>
