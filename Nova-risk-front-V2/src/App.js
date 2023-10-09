@@ -3,8 +3,8 @@ import Preloader from "../src/components/Pre";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import StarsList from "./components/StarsList/StarsList";
-import axios from 'axios';
 import CreateStar from "./components/CreateStar/CreateStar";
+import { loadStars } from "./Services/Services";
 
 
 
@@ -24,34 +24,12 @@ function App() {
   const [stars, setStars] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const loadStars = () => {
-    axios.get('http://localhost:8080/Stars')
-      .then(({ data }) => {
-        setStars(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setLoading(false);
-      });
-  };
-
-  const deleteStar = (_id) => {
-    axios.delete(`http://localhost:8080/Stars/${_id}`)
-      .then(() => loadStars())
-      .catch(error => console.log(error));
-  };
-    
-
   useEffect(() => {
-    loadStars();
+    loadStars().then((res) => {
+      setStars(res.data);
+      setLoading(false);
+    });
   }, []);
-
-  const createStar = (values) => {
-    axios.post('http://localhost:8080/Stars', values)
-      .then(() => loadStars())
-       
-  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,8 +47,8 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/StarsList" element={<StarsList stars={stars} onDelete={deleteStar}/>} />
-          <Route path="/CreateStar" element={<CreateStar createStar={createStar}/>} />
+          <Route path="/StarsList" element={<StarsList />} />
+          <Route path="/CreateStar" element={<CreateStar/>} />
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
       </div>

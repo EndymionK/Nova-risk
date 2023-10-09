@@ -2,19 +2,25 @@ import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "reactstrap";
 import Card from "react-bootstrap/Card";
+import { createStar } from "../../Services/Services";
 
 
-const CreateStarCard = ({ createStar }) => {
-  const { register, handleSubmit, formState: { isValid, errors } } = useForm({
+const CreateStarCard = () => {
+  const { register, handleSubmit, formState: { isValid, errors },reset } = useForm({
     mode: "onBlur", // Add this if not already defined
     shouldFocusError: true, // Add this if not already defined
   });
 
   const _createStar = (values) => {
+
     // Validar y procesar los valores del formulario aquí
     console.log("Form values:", values);
-    createStar(values);
+    console.log(createStar);
+    createStar(values).then(()=>{console.log("Star created"); reset();});
+
+    
   };
+   
 
   const inputFields = [
     { name: "hip", label: "The star's ID in the Hipparcos catalog.", type: "number", placeholder: "hip" },

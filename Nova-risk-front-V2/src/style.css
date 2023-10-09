@@ -315,9 +315,8 @@ button:focus {
 }
 
 .custom-input {
-  /* Establece el ancho deseado para los campos de entrada personalizados */
   width: 100%;
-  max-width: 1000px; /* Puedes ajustar este valor según tus necesidades */
+  max-width: 1000px; 
 }
 
 .home-about-section {
@@ -449,6 +448,22 @@ button:focus {
   padding-bottom: 30px !important;
   background-image: var(--section-background-color) !important;
   color: white !important;
+}
+
+.StarList-section {
+  position: relative !important;
+  padding-top: 50x !important;
+  padding-bottom: 30px !important;
+  background-image: var(--section-background-color) !important;
+  color: white !important;
+}
+
+.StarListCard-section {
+  position: relative !important;
+  padding-top: 50x !important;
+  padding-bottom: 30px !important;
+  background-image: var(--section-background-color) !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .tech-icons {

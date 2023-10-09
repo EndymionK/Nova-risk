@@ -5,7 +5,7 @@ import StarsListCard from "./StarsListCard";
 
 function StarsList() {
   return (
-    <Container fluid className="about-section">
+    <Container fluid className="StarList-section">
       <Particle />
       <Container>
         <Row style={{ justifyContent: "center", padding: "10px" }}>
