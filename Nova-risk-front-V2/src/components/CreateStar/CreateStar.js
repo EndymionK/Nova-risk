@@ -1,11 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
-import CreateStarCard from "./CreateStarCard"; // Importa el componente CreateStarCard
+import CreateEditStarCard from "./CreateEditStarCard";
 
 function CreateStar() {
 
-  // Define la función createStar si aún no lo has hecho aquí
+  const starToEdit = null;
 
   return (
     <Container fluid className="CreateStar-section">
@@ -23,7 +23,7 @@ function CreateStar() {
             <h1 style={{ fontSize: "5em", paddingBottom: "40px" }}>
               Add a new <strong className="purple">Star</strong> to the database.
             </h1>
-            <CreateStarCard />
+            <CreateEditStarCard starToEdit={starToEdit} />
           </Col>
         </Row>
       </Container>

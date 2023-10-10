@@ -15,3 +15,13 @@ export const createStar = (values) => {
 export const loadStarById = (id) => {
     return axios.get(`http://localhost:8080/Stars/${id}`)
 }
+
+export const updateStar = (id, updatedStarData) => {
+    return axios.put(`http://localhost:8080/Stars/${id}`, updatedStarData)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
