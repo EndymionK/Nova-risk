@@ -16,12 +16,12 @@ export const loadStarById = (id) => {
     return axios.get(`http://localhost:8080/Stars/${id}`)
 }
 
-export const updateStar = (id, updatedStarData) => {
-    return axios.put(`http://localhost:8080/Stars/${id}`, updatedStarData)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        throw error;
-      });
+export const updateStar = async (id, updatedStarData) => {
+    console.log(id)
+    try {
+    const response = await axios.put(`http://localhost:8080/Stars/${id}`, updatedStarData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
   };

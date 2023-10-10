@@ -66,6 +66,7 @@ const StarsListCard = ({ onEdit }) => {
                   className="cursor-pointer"
                   onClick={() => onEdit(star)}
                 />
+                
                 <FontAwesomeIcon
                   icon={faTrash}
                   className="cursor-pointer ms-2 trash-icon"

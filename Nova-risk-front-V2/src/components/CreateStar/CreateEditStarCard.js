@@ -44,7 +44,7 @@ const inputFields = [
   }
 ];
 
-const CreateEditStarCard = ({ starToEdit }) => {
+const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
   const {
     register,
     handleSubmit,
@@ -56,27 +56,37 @@ const CreateEditStarCard = ({ starToEdit }) => {
     shouldFocusError: true,
   });
 
-  const isEditing = !!starToEdit;
-
   useEffect(() => {
-    if (isEditing && starToEdit) {
+    if (starToEdit) {
+      // Configurar valores para la edición
       inputFields.forEach((field) => {
-        setValue(field.name, starToEdit[field.name]);
+        setValue(field.name, starToEdit[field.name] || "");
       });
     }
-  }, [isEditing, starToEdit, setValue]);
+  }, [starToEdit, setValue]);
 
   const onSubmit = (values) => {
-    if (isEditing) {
-      updateStar(starToEdit._id, values).then(() => {
-        console.log("Star updated");
-        // Realiza cualquier otra lógica necesaria
-      });
+    if (starToEdit) {
+      // Si estamos editando, actualizar la estrella existente
+      console.log(starToEdit._id, values)
+      updateStar(starToEdit._id, values)
+        .then(() => {
+          console.log("Star updated");
+          onEditComplete();
+        })
+        .catch((error) => {
+          console.error("Error updating star:", error);
+        });
     } else {
-      createStar(values).then(() => {
-        console.log("Star created");
-        reset(); // Reiniciar el formulario después de la creación
-      });
+      // Si no estamos editando, crear una nueva estrella
+      createStar(values)
+        .then(() => {
+          console.log("Star created");
+          reset(); // Reiniciar el formulario después de la creación
+        })
+        .catch((error) => {
+          console.error("Error creating star:", error);
+        });
     }
   };
 
@@ -92,7 +102,7 @@ const CreateEditStarCard = ({ starToEdit }) => {
                 </label>
                 <input
                   {...register(field.name, {
-                    required: "Al menos un campo es requerido.",
+                    required: index === 0 ? "Este campo es requerido." : undefined,
                   })}
                   type={field.type}
                   className={`form-control ${
@@ -111,8 +121,13 @@ const CreateEditStarCard = ({ starToEdit }) => {
 
             <div className="text-center mb-3">
               <Button className="mb-3" color="primary" type="submit" disabled={!isValid}>
-                {isEditing ? "Update Star" : "Add Star"}
+                {starToEdit ? "Update Star" : "Add Star"} {/* Cambiar el texto del botón en función de si estamos editando */}
               </Button>
+              {starToEdit && (
+                <Button color="secondary" onClick={onCancelEdit}>
+                  Cancel Edit
+                </Button>
+              )}
             </div>
           </form>
         </blockquote>
