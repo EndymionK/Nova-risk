@@ -5,7 +5,7 @@ import Home from "./components/Home/Home";
 import StarsList from "./components/StarsList/StarsList";
 import CreateStar from "./components/CreateStar/CreateStar";
 import { loadStars } from "./Services/Services";
-
+import StarDetails from "./components/StarsList/StarDetails";
 
 
 import {
@@ -49,6 +49,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/StarsList" element={<StarsList />} />
           <Route path="/CreateStar" element={<CreateStar/>} />
+          <Route path="/star/:id" element={<StarDetails />} />
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
       </div>

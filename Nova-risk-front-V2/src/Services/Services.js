@@ -11,3 +11,7 @@ export const deleteStar = (_id) => {
 export const createStar = (values) => {
     return axios.post('http://localhost:8080/Stars', values)            
 }
+
+export const loadStarById = (id) => {
+    return axios.get(`http://localhost:8080/Stars/${id}`)
+}

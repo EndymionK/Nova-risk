@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import myImg from "../../Assets/avatar.svg";
 import Tilt from "react-parallax-tilt";
 import { AiFillGithub} from "react-icons/ai";
+import image555446 from "../../Assets/555446.jpg";
 
 
 function Home2() {
@@ -18,9 +18,9 @@ function Home2() {
             Welcome to our captivating star catalog, where you can delve into the mysterious and astonishing world of the cosmos. Discover distant stars, explore their unique characteristics, and learn about those that may become supernovae in the near future. Join us on this thrilling journey through space and time.
             </p>
           </Col>
-          <Col md={4} className="myAvtar">
+          <Col md={4} className="aboutimage">
             <Tilt>
-              <img src={myImg} className="img-fluid" alt="avatar" />
+              <img src={image555446} className="img-fluid" alt="aboutimage" />
             </Tilt>
           </Col>
         </Row>

@@ -302,13 +302,13 @@ button:focus {
   }
 }
 
-.myAvtar {
+.aboutimage {
   justify-content: center !important;
-  padding-top: 9em !important;
+  padding-top: 4em !important;
 }
 
 @media (max-width: 767px) {
-  .myAvtar {
+  .aboutimage {
     padding-top: 2em !important;
     padding-bottom: 2em !important;
   }
@@ -444,7 +444,7 @@ button:focus {
 
 .CreateStar-section {
   position: relative !important;
-  padding-top: 150px !important;
+  padding-top: 80px !important;
   padding-bottom: 30px !important;
   background-image: var(--section-background-color) !important;
   color: white !important;
@@ -454,7 +454,6 @@ button:focus {
   position: relative !important;
   padding-top: 50x !important;
   padding-bottom: 30px !important;
-  background-image: var(--section-background-color) !important;
   color: white !important;
 }
 
@@ -462,7 +461,6 @@ button:focus {
   position: relative !important;
   padding-top: 50x !important;
   padding-bottom: 30px !important;
-  background-image: var(--section-background-color) !important;
   color: rgb(0, 0, 0) !important;
 }
 
@@ -513,6 +511,24 @@ button:focus {
   .about-img {
     padding-top: 0 !important;
   }
+}
+
+
+/* --------- */
+/* StarDetails */
+/* --------- */
+
+
+.link-no-underline {
+  text-decoration: none; 
+  color: inherit; 
+}
+
+.StarDetails-section {
+  position: relative !important;
+  padding-top: 500x !important;
+  padding-bottom: px !important;
+  color: white !important;
 }
 
 

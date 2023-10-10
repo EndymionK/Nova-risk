@@ -1,27 +1,30 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "reactstrap";
 import Card from "react-bootstrap/Card";
 import { createStar } from "../../Services/Services";
 
-
 const CreateStarCard = () => {
-  const { register, handleSubmit, formState: { isValid, errors },reset } = useForm({
-    mode: "onBlur", // Add this if not already defined
-    shouldFocusError: true, // Add this if not already defined
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+    reset,
+  } = useForm({
+    mode: "onBlur",
+    shouldFocusError: true,
   });
 
   const _createStar = (values) => {
-
     // Validar y procesar los valores del formulario aquí
     console.log("Form values:", values);
     console.log(createStar);
-    createStar(values).then(()=>{console.log("Star created"); reset();});
-
-    
+    createStar(values).then(() => {
+      console.log("Star created");
+      reset();
+    });
   };
    
-
   const inputFields = [
     { name: "hip", label: "The star's ID in the Hipparcos catalog.", type: "number", placeholder: "hip" },
     { name: "hd", label: "The star's ID in the Henry Draper catalog.", type: "number", placeholder: "hd" },
@@ -62,6 +65,17 @@ const CreateStarCard = () => {
     }
   ];
 
+  const isAtLeastOneFieldFilled = () => {
+    // Verificar si al menos uno de los campos hip, hd, hr, gl o bf está lleno
+    return (
+      !!register("hip").value ||
+      !!register("hd").value ||
+      !!register("hr").value ||
+      !!register("gl").value ||
+      !!register("bf").value
+    );
+  };
+
   return (
     <Card className="quote-card-view">
       <Card.Body>
@@ -73,12 +87,24 @@ const CreateStarCard = () => {
                   {field.label}
                 </label>
                 <input
-                  {...register(field.name, { required: field.required })}
+                  {...register(field.name, {
+                    required: {
+                      value: isAtLeastOneFieldFilled(),
+                      message: "Al menos un campo es requerido.",
+                    },
+                  })}
                   type={field.type}
-                  className={`form-control ${errors[field.name] ? 'is-invalid' : ''} custom-input`}
+                  className={`form-control ${
+                    errors[field.name] ? "is-invalid" : ""
+                  } custom-input`}
                   id={field.name}
                   placeholder={field.placeholder}
                 />
+                {errors[field.name] && (
+                  <div className="invalid-feedback">
+                    {errors[field.name].message}
+                  </div>
+                )}
               </div>
             ))}
 
@@ -92,8 +118,6 @@ const CreateStarCard = () => {
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default CreateStarCard;
-
-

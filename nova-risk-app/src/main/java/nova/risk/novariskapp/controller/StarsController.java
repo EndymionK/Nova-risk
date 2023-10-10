@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-
+import java.util.Optional;
 import java.util.List;
 
 @CrossOrigin
@@ -29,6 +29,16 @@ public class StarsController {
         return starsRepository.findAll(pageRequest).getContent();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Stars> getStarById(@PathVariable String id) {
+        Optional<Stars> star = starsRepository.findById(id);
+
+        if (star.isPresent()) {
+            return ResponseEntity.ok(star.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")

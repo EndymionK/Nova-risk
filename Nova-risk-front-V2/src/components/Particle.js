@@ -14,6 +14,16 @@ function Particle() {
               value_area: 1500,
             },
           },
+          shape: {
+            type: "star", // Establece la forma de la partícula como estrella
+            stroke: {
+              width: 2,
+              color: "#ffffff",
+            },
+            polygon: {
+              nb_sides: 5, // Número de puntas de la estrella
+            },
+          },
           line_linked: {
             enable: false,
             opacity: 0.03,
@@ -30,6 +40,7 @@ function Particle() {
               enable: true,
               speed: 1,
               opacity_min: 0.05,
+              sync: false,
             },
           },
         },
