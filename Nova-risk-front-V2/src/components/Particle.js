@@ -15,13 +15,13 @@ function Particle() {
             },
           },
           shape: {
-            type: "star", // Establece la forma de la partícula como estrella
+            type: "star", 
             stroke: {
               width: 2,
               color: "#ffffff",
             },
             polygon: {
-              nb_sides: 5, // Número de puntas de la estrella
+              nb_sides: 5, 
             },
           },
           line_linked: {
@@ -29,8 +29,8 @@ function Particle() {
             opacity: 0.03,
           },
           move: {
-            direction: "right",
-            speed: 0.05,
+            direction: "top",
+            speed: 2,
           },
           size: {
             value: 1,

@@ -1,51 +1,48 @@
 package nova.risk.novariskapp.controller;
+
 import org.bson.types.ObjectId;
-import org.springframework.web.bind.annotation.RestController;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
-import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/Stars")
-
-
 public class StarsController {
     private final StarsRepository starsRepository;
+
     @Autowired
     public StarsController(StarsRepository starsRepository) {
         this.starsRepository = starsRepository;
     }
+
     @GetMapping("")
-    List<Stars> index() {
-        // Utiliza PageRequest para limitar la consulta a los primeros 10 elementos
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        return starsRepository.findAll(pageRequest).getContent();
+    public ResponseEntity<Page<Stars>> index(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Stars> starsPage = starsRepository.findAll(pageRequest);
+        return ResponseEntity.ok(starsPage);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Stars> getStarById(@PathVariable String id) {
         Optional<Stars> star = starsRepository.findById(id);
-
-        if (star.isPresent()) {
-            return ResponseEntity.ok(star.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return star.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-    
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    Stars create(@RequestBody Stars stars){
+    Stars create(@RequestBody Stars stars) {
         return starsRepository.save(stars);
-
     }
 
     @PutMapping("/{_id}")

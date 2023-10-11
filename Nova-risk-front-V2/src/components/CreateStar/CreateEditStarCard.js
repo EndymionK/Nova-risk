@@ -66,9 +66,18 @@ const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
   }, [starToEdit, setValue]);
 
   const onSubmit = (values) => {
+    // Validar que al menos uno de los primeros 5 campos no esté vacío
+    const firstFiveFields = inputFields.slice(0, 5);
+    const atLeastOneNotEmpty = firstFiveFields.some((field) => !!values[field.name]);
+    
+    if (!atLeastOneNotEmpty) {
+      alert("You must complete at least one of the first 5 fields.");
+      return;
+    }
+
     if (starToEdit) {
       // Si estamos editando, actualizar la estrella existente
-      console.log(starToEdit._id, values)
+      console.log(starToEdit._id, values);
       updateStar(starToEdit._id, values)
         .then(() => {
           console.log("Star updated");
@@ -102,7 +111,7 @@ const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
                 </label>
                 <input
                   {...register(field.name, {
-                    required: index === 0 ? "Este campo es requerido." : undefined,
+                    // No se aplica la validación "required" aquí
                   })}
                   type={field.type}
                   className={`form-control ${

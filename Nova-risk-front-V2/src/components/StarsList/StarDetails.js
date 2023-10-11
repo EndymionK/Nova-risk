@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { loadStarById } from "../../Services/Services";
-import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 import "./star-details.css";
 
@@ -65,39 +64,9 @@ const StarDetails = () => {
     p_supernova: "Probability of Supernova",
   };
 
-  // return (
-  //   <Container style={{ position: "relative" }}>
-  //     <Particle style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} />
-  //     <Container fluid className="StarDetails-section">
-  //       <Row style={{ justifyContent: "center", padding: "10px" }}>
-  //         <Col
-  //           md={7}
-  //           style={{
-  //             justifyContent: "center",
-  //             paddingTop: "60px",
-  //             paddingBottom: "10px",
-  //           }}
-  //         >
-  //           <h1 style={{ fontSize: "2.1em", paddingBottom: "20px" }}>
-  //             Aditional information about the <span style={{ fontSize: "1.2em", fontWeight: "bold" }} className="purple">Star</span>
-  //           </h1>
-  //         </Col>
-  //       </Row>
-  //     </Container>
-  //     <Row>
-  //       {Object.entries(labelMappings).map(([labelAbbr, labelFull]) => (
-  //         <Col md={4} key={labelAbbr}>
-  //           <div className="bg-white p-3 mb-3">
-  //             <h6 className="mb-3"><strong>{labelFull}</strong></h6>
-  //             <p className="mb-0">{star[labelAbbr]}</p>
-  //           </div>
-  //         </Col>
-  //       ))}
-  //     </Row>
-  //   </Container>
-  // );
   return (
     <section className="ContainerCards">
+      <Particle />
       {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (
           <div className="Card" key={index}>
             <h6><strong>{labelFull}</strong></h6>

@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import StarsList from "./components/StarsList/StarsList";
 import CreateStar from "./components/CreateStar/CreateStar";
-import { loadStars } from "./Services/Services";
 import StarDetails from "./components/StarsList/StarDetails";
 import NovaRisk from "./components/NovaRisk/NovaRisk";
 
@@ -22,15 +21,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [load, upadateLoad] = useState(true);
-  const [stars, setStars] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadStars().then((res) => {
-      setStars(res.data);
-      setLoading(false);
-    });
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
