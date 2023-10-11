@@ -1,0 +1,24 @@
+.ContainerCards {
+    position: relative;
+    top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.Card {
+    border-radius: .5rem;
+    padding: 1rem;
+    background-color: #e0e0e0;
+    box-shadow: 9px 9px 15px -4px rgba(43, 43, 43, 0.75);
+    min-height: 100px;
+}
+
+@media (max-width: 768px) {
+    .ContainerCards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+}

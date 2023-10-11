@@ -39,6 +39,7 @@ public class StarsController {
             return ResponseEntity.notFound().build();
         }
     }
+    
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
@@ -52,7 +53,7 @@ public class StarsController {
 
         Stars starsFromDb = starsRepository.findById(String.valueOf(_id)).orElseThrow(Exception::new);
 
-        
+
         starsFromDb.setHip(stars.getHip());
         starsFromDb.setHd(stars.getHd());
         starsFromDb.setHr(stars.getHr());

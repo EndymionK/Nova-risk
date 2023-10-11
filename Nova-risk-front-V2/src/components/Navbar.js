@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import {
   AiFillBuild,
+  AiFillFire,
   AiFillStar,
   AiOutlineHome,
   AiOutlineUser,
@@ -70,6 +71,16 @@ function NavBar() {
                 onClick={() => updateExpanded(false)}
               >
                 <AiFillBuild style={{ marginBottom: "2px" }} /> Create Star
+              </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to="/NovaRisk"
+                onClick={() => updateExpanded(false)}
+              >
+                <AiFillFire style={{ marginBottom: "2px" }} /> Nova Risk
               </Nav.Link>
             </Nav.Item>
 

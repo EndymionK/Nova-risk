@@ -6,6 +6,7 @@ import StarsList from "./components/StarsList/StarsList";
 import CreateStar from "./components/CreateStar/CreateStar";
 import { loadStars } from "./Services/Services";
 import StarDetails from "./components/StarsList/StarDetails";
+import NovaRisk from "./components/NovaRisk/NovaRisk";
 
 
 import {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/StarsList" element={<StarsList />} />
           <Route path="/CreateStar" element={<CreateStar/>} />
           <Route path="/star/:id" element={<StarDetails />} />
+          <Route path="/NovaRisk" element={<NovaRisk/>} />
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
       </div>
