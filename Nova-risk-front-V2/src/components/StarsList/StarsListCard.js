@@ -4,15 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { loadStars, deleteStar } from "../../Services/Services";
 import { Link } from "react-router-dom";
-import { Pagination } from "react-bootstrap";
+import Pagination from "react-bootstrap/Pagination";
 
 const StarsListCard = ({ onEdit }) => {
   const [starsPage, setStarsPage] = useState({ content: [], totalElements: 0 });
-  const [currentPage, setCurrentPage] = useState(0);
-  const [starsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1); // Cambia la página inicial a 1.
+  const [starsPerPage] = useState(15);
 
   useEffect(() => {
-    loadStars(currentPage, starsPerPage)
+    loadStars(currentPage - 1, starsPerPage) // Resta 1 para que coincida con la indexación de la página en el backend.
       .then((response) => {
         setStarsPage(response.data);
       })
@@ -25,7 +25,7 @@ const StarsListCard = ({ onEdit }) => {
     deleteStar(_id)
       .then(() => {
         // Actualiza la página actual después de eliminar una estrella.
-        loadStars(currentPage, starsPerPage)
+        loadStars(currentPage - 1, starsPerPage)
           .then((response) => {
             setStarsPage(response.data);
           })
@@ -39,26 +39,57 @@ const StarsListCard = ({ onEdit }) => {
   };
 
   const catalogNames = {
+    proper: "Proper Name",
     hip: "Hipparcos Catalog",
     hd: "Henry Draper Catalog",
     hr: "Harvard Revised Catalog",
     gl: "Gliese Catalog",
     bf: "Bayer / Flamsteed Designation",
   };
-
+  
   const getNumberToShow = (star) => {
-    const mandatoryVariables = ["hip", "hd", "hr", "gl", "bf"];
-    for (const variable of mandatoryVariables) {
-      if (star[variable]) {
-        return `${catalogNames[variable]}: ${star[variable]}`;
-      }
+    if (star.proper) {
+      return `${catalogNames.proper}: ${star.proper}`;
+    } else if (!isNaN(star.hip)) {
+      return `${catalogNames.hip}: ${star.hip}`;
+    } else if (!isNaN(star.hd)) {
+      return `${catalogNames.hd}: ${star.hd}`;
+    } else if (!isNaN(star.hr)) {
+      return `${catalogNames.hr}: ${star.hr}`;
+    } else if (star.gl) {
+      return `${catalogNames.gl}: ${star.gl}`;
+    } else if (!isNaN(star.bf)) {
+      return `${catalogNames.bf}: ${star.bf}`;
     }
-    return "N/A";
+    return "No catalog number available";
   };
+  
 
   // Función para cambiar la página
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber - 1); // Resta 1 para que coincida con la indexación de la página en el backend.
+    setCurrentPage(pageNumber);
+  };
+
+  const totalPages = Math.ceil(starsPage.totalElements / starsPerPage);
+
+  const renderPaginationItems = () => {
+    const paginationItems = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (i <= 3 || i > totalPages - 3 || Math.abs(i - currentPage) <= 1) {
+        paginationItems.push(
+          <Pagination.Item
+            key={i}
+            active={i === currentPage}
+            onClick={() => handlePageChange(i)}
+          >
+            {i}
+          </Pagination.Item>
+        );
+      } else if (paginationItems[paginationItems.length - 1] !== "ellipsis") {
+        paginationItems.push("ellipsis");
+      }
+    }
+    return paginationItems;
   };
 
   return (
@@ -94,18 +125,32 @@ const StarsListCard = ({ onEdit }) => {
         </Card>
       ))}
       {/* Paginación */}
-      <Pagination>
-        {Array(Math.ceil(starsPage.totalElements / starsPerPage))
-          .fill()
-          .map((_, index) => (
-            <Pagination.Item
-              key={index}
-              active={index + 1 === currentPage + 1}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
+      <Pagination className="justify-content-center">
+        <Pagination.First
+          onClick={() => handlePageChange(1)}
+          disabled={currentPage === 1}
+        />
+        <Pagination.Prev
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        />
+        {renderPaginationItems().map((item, index) => (
+          <React.Fragment key={index}>
+            {item === "ellipsis" ? (
+              <Pagination.Ellipsis disabled />
+            ) : (
+              item
+            )}
+          </React.Fragment>
+        ))}
+        <Pagination.Next
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        />
+        <Pagination.Last
+          onClick={() => handlePageChange(totalPages)}
+          disabled={currentPage === totalPages}
+        />
       </Pagination>
     </Container>
   );

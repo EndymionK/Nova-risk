@@ -439,7 +439,7 @@ button:focus {
 
 
 /* --------- */
-/* About */
+/* Create style */
 /* --------- */
 
 .CreateStar-section {
@@ -532,4 +532,21 @@ button:focus {
 }
 
 
+/* --------- */
+/* CreateEditStar */
+/* --------- */
 
+
+.button-container {
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.add-button {
+  flex: 0.5; 
+  margin-right: 17px; 
+}
+
+.cancel-button {
+  flex: 0.5; 
+}

@@ -111,7 +111,7 @@ const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
                 </label>
                 <input
                   {...register(field.name, {
-                    // No se aplica la validación "required" aquí
+                    
                   })}
                   type={field.type}
                   className={`form-control ${
@@ -129,14 +129,25 @@ const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
             ))}
 
             <div className="text-center mb-3">
-              <Button className="mb-3" color="primary" type="submit" disabled={!isValid}>
-                {starToEdit ? "Update Star" : "Add Star"} {/* Cambiar el texto del botón en función de si estamos editando */}
-              </Button>
-              {starToEdit && (
-                <Button color="secondary" onClick={onCancelEdit}>
-                  Cancel Edit
+              <div className="button-container">
+                <Button
+                  className="add-button"
+                  color="primary"
+                  type="submit"
+                  disabled={!isValid}
+                >
+                  {starToEdit ? "Update Star" : "Add Star"}
                 </Button>
-              )}
+                {starToEdit && (
+                  <Button
+                    className="cancel-button"
+                    color="secondary"
+                    onClick={onCancelEdit}
+                  >
+                    Cancel Edit
+                  </Button>
+                )}
+              </div>
             </div>
           </form>
         </blockquote>

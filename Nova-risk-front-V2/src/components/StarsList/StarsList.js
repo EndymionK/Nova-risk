@@ -37,13 +37,18 @@ function StarsList() {
             }}
           >
             <h1 style={{ fontSize: "2.1em", paddingBottom: "20px" }}>
-              Our <strong className="purple">Stars</strong> List
+              {isEditing ? 
+                "Editing Star" : (
+                <>
+                  Our <strong className="purple">Stars</strong> Database
+                </>
+              )}
             </h1>
             {isEditing ? (
               <CreateEditStarCard
                 starToEdit={starToEdit}
-                onCancelEdit={handleCancelEdit} // Agregar onCancelEdit
-                onEditComplete={handleEditComplete} // Agregar onEditComplete
+                onCancelEdit={handleCancelEdit}
+                onEditComplete={handleEditComplete}
               />
             ) : (
               <StarsListCard onEdit={handleEditStar} />

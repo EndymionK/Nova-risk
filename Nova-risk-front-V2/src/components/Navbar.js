@@ -8,7 +8,6 @@ import {
   AiFillFire,
   AiFillStar,
   AiOutlineHome,
-  AiOutlineUser,
 } from "react-icons/ai";
 
 function NavBar() {
