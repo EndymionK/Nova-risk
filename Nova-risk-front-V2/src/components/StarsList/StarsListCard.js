@@ -48,22 +48,30 @@ const StarsListCard = ({ onEdit }) => {
   };
   
   const getNumberToShow = (star) => {
-    if (star.proper) {
-      return `${catalogNames.proper}: ${star.proper}`;
-    } else if (!isNaN(star.hip)) {
-      return `${catalogNames.hip}: ${star.hip}`;
-    } else if (!isNaN(star.hd)) {
-      return `${catalogNames.hd}: ${star.hd}`;
-    } else if (!isNaN(star.hr)) {
-      return `${catalogNames.hr}: ${star.hr}`;
-    } else if (star.gl) {
-      return `${catalogNames.gl}: ${star.gl}`;
-    } else if (!isNaN(star.bf)) {
-      return `${catalogNames.bf}: ${star.bf}`;
+    const showValue = (value, catalogName) => {
+      if (value !== null && value !== "") {
+        return `${catalogName}: ${value}`;
+      }
+      return null;
+    };
+  
+    const catalogArray = [
+      showValue(star.proper, catalogNames.proper),
+      showValue(star.hip, catalogNames.hip),
+      showValue(star.hd, catalogNames.hd),
+      showValue(star.hr, catalogNames.hr),
+      showValue(star.gl, catalogNames.gl),
+      showValue(star.bf, catalogNames.bf),
+    ];
+  
+    const validCatalog = catalogArray.find((value) => value !== null);
+  
+    if (validCatalog) {
+      return validCatalog;
     }
+  
     return "No catalog number available";
   };
-  
 
   // Función para cambiar la página
   const handlePageChange = (pageNumber) => {
