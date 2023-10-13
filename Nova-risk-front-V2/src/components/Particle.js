@@ -41,8 +41,9 @@ const Particle = () => {
             opacity: 0.03,
           },
           move: {
-            direction: "top",
-            speed: 2,
+            direction: "right",
+            speed: 0.25,
+            enable : true,
           },
           size: {
             value: 1,
@@ -50,16 +51,16 @@ const Particle = () => {
           opacity: {
             anim: {
               enable: true,
-              speed: 1,
+              speed: 2,
               opacity_min: 0.05,
-              sync: false,
+              sync : false,
             },
           },
         },
         interactivity: {
           events: {
             onclick: {
-              enable: false,
+              enable: true,
               mode: "push",
             },
           },
