@@ -44,6 +44,47 @@ const inputFields = [
   }
 ];
 
+// Función para calcular la probabilidad nova/supernova
+const calcularProbabilidadNovaSupernova = (starData) => {
+  const {
+    absmag,
+    spect,
+    rv,
+    lum,
+  } = starData;
+
+  // Verificar si el valor en la columna "spect" es una cadena de texto
+  let clase_principal = 'X';  // Valor por defecto para clase principal
+  let subclase = 0;  // Valor por defecto para subclase
+
+  if (typeof spect === 'string') {
+    // Obtener la clase principal y la subclase del tipo espectral
+    clase_principal = spect[0];  // Primera letra (clase principal)
+    
+    // Verificar si hay un segundo carácter (subclase) y si es un dígito
+    if (spect.length > 1 && !isNaN(spect[1])) {
+      subclase = parseInt(spect[1], 10);
+    }
+  }
+
+  // Calcular la probabilidad hipotética de nova o supernova
+  const pesos_clase = { '0': 20, 'B': 15, 'A': 10, 'F': 5, 'G': 2, 'K': 1, 'M': 0.5, 'X': 0.0 };
+  const epsilon = 1e-6;  // Valor muy pequeño para evitar división entre cero
+
+  let probabilidad_nova_supernova = (
+    (subclase * 0.2) +  // Contribución de la subclase
+    (1 / (absmag + epsilon) * 0.2) +  // Contribución de la magnitud absoluta
+    (rv * 0.05) +  // Contribución de la velocidad radial
+    (lum * 0.1) +  // Contribución de la luminosidad
+    (pesos_clase[clase_principal] * 0.3)  // Contribución de la clase principal
+  );
+
+  // Escalar la probabilidad a un valor entre 1 y 100
+  probabilidad_nova_supernova = Math.max(0, Math.min(100, probabilidad_nova_supernova));
+
+  return probabilidad_nova_supernova;
+};
+
 const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
   const {
     register,
@@ -62,6 +103,8 @@ const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
       inputFields.forEach((field) => {
         setValue(field.name, starToEdit[field.name] || "");
       });
+      const pSupernova = calcularProbabilidadNovaSupernova(starToEdit);
+      setValue("p_supernova", pSupernova);
     }
   }, [starToEdit, setValue]);
 
