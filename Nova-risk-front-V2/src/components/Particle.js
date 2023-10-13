@@ -15,8 +15,8 @@ const Particle = () => {
   return (
     <Particles
       id="tsparticles"
-      init = {particlesInit}
-      loaded = {particlesLoaded}
+      init={particlesInit}
+      loaded={particlesLoaded}
       options={{
         particles: {
           number: {
@@ -41,25 +41,26 @@ const Particle = () => {
             opacity: 0.03,
           },
           move: {
-            direction: "top",
-            speed: 2,
+            direction: "right",
+            speed: 0.25,
+            enable: true,
           },
           size: {
             value: 1,
           },
           opacity: {
-            anim: {
+            AnimationEffect: {
               enable: true,
               speed: 1,
               opacity_min: 0.05,
-              sync: false,
+              sync: true,
             },
           },
         },
         interactivity: {
           events: {
             onclick: {
-              enable: false,
+              enable: true,
               mode: "push",
             },
           },
@@ -73,6 +74,6 @@ const Particle = () => {
       }}
     />
   );
-}
+};
 
 export default Particle;
