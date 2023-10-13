@@ -1,11 +1,23 @@
-import React from "react";
+import { useCallback } from "react";
 import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
 
-function Particle() {
+const Particle = () => {
+  const particlesInit = useCallback(async (main) => {
+    console.log(main);
+    await loadSlim(main);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container) => {
+    console.log(container);
+  }, []);
+
   return (
     <Particles
       id="tsparticles"
-      params={{
+      init = {particlesInit}
+      loaded = {particlesLoaded}
+      options={{
         particles: {
           number: {
             value: 160,
@@ -15,13 +27,13 @@ function Particle() {
             },
           },
           shape: {
-            type: "star", 
+            type: "star",
             stroke: {
               width: 2,
               color: "#ffffff",
             },
             polygon: {
-              nb_sides: 5, 
+              nb_sides: 5,
             },
           },
           line_linked: {
