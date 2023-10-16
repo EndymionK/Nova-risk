@@ -25,3 +25,7 @@ export const updateStar = async (id, updatedStarData) => {
     throw error;
   }
   };
+
+export const loadClosestSupernovae = () => {
+  return axios.get('http://localhost:8080/Stars/ClosestSupernovae');
+};

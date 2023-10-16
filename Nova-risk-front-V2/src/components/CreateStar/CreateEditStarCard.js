@@ -103,8 +103,8 @@ const CreateEditStarCard = ({ starToEdit, onCancelEdit, onEditComplete }) => {
       inputFields.forEach((field) => {
         setValue(field.name, starToEdit[field.name] || "");
       });
-      const pSupernova = calcularProbabilidadNovaSupernova(starToEdit);
-      setValue("p_supernova", pSupernova);
+      const psupernova = calcularProbabilidadNovaSupernova(starToEdit);
+      setValue("psupernova", psupernova);
     }
   }, [starToEdit, setValue]);
 

@@ -1,72 +1,70 @@
-import { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import React, { useEffect, useState, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { loadClosestSupernovae } from "../../Services/Services";
+
+function getColorForCI(ci) {
+  // Define un mapeo de colores basado en los valores de CI
+  // Puedes personalizar estos colores según tus preferencias
+  const colorMap = {
+    // Define un color para un rango de CI específico
+    // Por ejemplo, rojo para CI bajo y azul para CI alto
+    // Puedes ajustar estos valores según tus necesidades
+    lowCI: 0xff0000, // Rojo
+    mediumCI: 0xffff00, // Amarillo
+    highCI: 0x0000ff, // Azul
+  };
+
+  // Determina el rango de CI basado en tus datos
+  if (ci < 1.0) {
+    return colorMap.lowCI;
+  } else if (ci < 2.0) {
+    return colorMap.mediumCI;
+  } else {
+    return colorMap.highCI;
+  }
+}
 
 function Star(props) {
-  // This reference gives us direct access to the THREE.Mesh object
   const ref = useRef()
-  // Hold state for hovered and clicked events
-  const [hover, setHover] = useState(false)
-  const [clicked, click] = useState(false)
-  // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => (ref.current.rotation.x += delta))
-  // Return the view, these are regular Threejs elements expressed in JSX
+
+  // Obtén el color basado en el CI
+  const color = getColorForCI(props.ci);
+
   return (
     <mesh
       {...props}
       ref={ref}
-      onClick={(event) => click(!clicked)}
-      onPointerOver={(event) => (event.stopPropagation(), setHover(true))}
-      onPointerOut={(event) => setHover(false)}>
+      onClick={() => {}}
+      onPointerOver={(event) => event.stopPropagation()}
+      onPointerOut={() => {}}
+    >
       <sphereGeometry />
-      <meshStandardMaterial color={'white'} />
+      <meshStandardMaterial color={color} />
     </mesh>
   )
 }
 
-function Earth(props) {
-    // This reference gives us direct access to the THREE.Mesh object
-    const ref = useRef()
-    // Hold state for hovered and clicked events
-    const [hover, setHover] = useState(false)
-    const [clicked, click] = useState(false)
-    // Subscribe this component to the render-loop, rotate the mesh every frame
-    useFrame((state, delta) => (ref.current.rotation.x += delta))
-    // Return the view, these are regular Threejs elements expressed in JSX
-    return (
-      <mesh
-        {...props}
-        ref={ref}
-        onClick={(event) => click(!clicked)}
-        onPointerOver={(event) => (event.stopPropagation(), setHover(true))}
-        onPointerOut={(event) => setHover(false)}>
-        <sphereGeometry />
-        <meshStandardMaterial color={'blue'} />
-      </mesh>
-    )
-  }
-
 export default function App() {
-    useEffect(() => {
-        const resizeCanvas = () => {
-          const canvas = document.querySelector('canvas')
-          canvas.style.width = '100%'
-          canvas.style.height = '100%'
-        }    
-        window.addEventListener('resize', resizeCanvas)
-        return () => {
-          window.removeEventListener('resize', resizeCanvas)
-        }
-      }, [])
+  const [closestStars, setClosestStars] = useState([]);
 
-
+  useEffect(() => {
+    loadClosestSupernovae().then((response) => {
+      setClosestStars(response.data);
+    });
+  }, []);
 
   return (
     <Canvas>
       <ambientLight intensity={2} />
-      <Star position={[-4, 0, 0]} />
-      <Star position={[4, 0, 0]} />
-      <Earth position={[0, 0, 0]} />
+      {closestStars.map((star, index) => (
+        <Star
+          key={index}
+          position={[star.x, star.y, star.z]}
+          ci={star.ci} // Pasa el valor de CI como prop
+        />
+      ))}
       <OrbitControls />
     </Canvas>
   )

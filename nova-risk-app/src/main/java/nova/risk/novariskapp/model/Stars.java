@@ -1,7 +1,5 @@
 package nova.risk.novariskapp.model;
-
 import lombok.Data;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -46,6 +44,6 @@ public class Stars {
     private String var;
     private Double var_min;
     private Double var_max;
-    private Double p_supernova;
+    private Double pSupernova;
 
 }

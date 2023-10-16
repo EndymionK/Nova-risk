@@ -61,7 +61,7 @@ const StarDetails = () => {
     var: "Variable Star",
     var_min: "Variable Star Minimum Magnitude",
     var_max: "Variable Star Maximum Magnitude",
-    p_supernova: "Probability of Supernova",
+    psupernova: "Probability of Supernova",
   };
 
   return (

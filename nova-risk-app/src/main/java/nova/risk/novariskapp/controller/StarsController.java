@@ -9,10 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import java.util.Optional;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/Stars")
 public class StarsController {
@@ -87,7 +91,7 @@ public class StarsController {
         starsFromDb.setVar(stars.getVar());
         starsFromDb.setVar_min(stars.getVar_min());
         starsFromDb.setVar_max(stars.getVar_max());
-        starsFromDb.setP_supernova(stars.getP_supernova());
+        starsFromDb.setPSupernova(stars.getPSupernova());
 
 
         return starsRepository.save(starsFromDb);
@@ -109,4 +113,26 @@ public class StarsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Error interno del servidor (500 Internal Server Error)
         }
     }
+
+    @GetMapping("/ClosestSupernovae")
+    public ResponseEntity<Object> getClosestSupernovae() {
+        // Consulta las estrellas que cumplen con los criterios en la base de datos
+        List<Stars> stars = starsRepository.findBypSupernovaGreaterThanAndDistNotNullOrderByDistAsc(80.0);
+
+        // Filtra las estrellas que tengan campos dist o pSupernova nulos o faltantes
+        stars = stars.stream()
+                .filter(star -> star.getDist() != null && star.getPSupernova() != null)
+                .collect(Collectors.toList());
+
+        // Limita la lista a las 100 estrellas más cercanas
+        if (stars.size() > 100) {
+            stars = stars.subList(0, 100);
+        }
+
+        return ResponseEntity.ok(stars);
+    }
+
+
+
+
 }
