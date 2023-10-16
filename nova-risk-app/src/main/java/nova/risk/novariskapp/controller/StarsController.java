@@ -125,8 +125,8 @@ public class StarsController {
                 .collect(Collectors.toList());
 
         // Limita la lista a las 100 estrellas más cercanas
-        if (stars.size() > 100) {
-            stars = stars.subList(0, 100);
+        if (stars.size() > 1000) {
+            stars = stars.subList(0, 1000);
         }
 
         return ResponseEntity.ok(stars);

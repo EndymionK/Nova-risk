@@ -550,3 +550,14 @@ button:focus {
 .cancel-button {
   flex: 0.5; 
 }
+
+/* --------- */
+/* Nova risk */
+/* --------- */
+
+
+.canvas-container {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
