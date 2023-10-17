@@ -4,6 +4,9 @@ import { OrbitControls } from '@react-three/drei';
 import { loadClosestSupernovae } from '../../Services/Services';
 import { Color, Vector3 } from 'three';
 
+// Importa el componente Text de @react-three/drei
+import { Text, Billboard } from '@react-three/drei';
+
 function getColorFromCI(ci) {
   // Mapea el valor de CI a un color en un gradiente de rojo a azul
   const minCI = -0.5; // Valor mínimo de CI
@@ -18,37 +21,30 @@ function getColorFromCI(ci) {
   );
 
   return color;
+  
 }
 
 function Star(props) {
   const ref = useRef();
   const [hover, setHover] = useState(false);
   const [clicked, click] = useState(false);
-  const { ci } = props;
+  const { ci, proper } = props;
 
   const materialColor = getColorFromCI(ci);
 
-  // Ajusta las propiedades del material para hacer que las estrellas sean más brillantes
   const materialProps = {
     color: materialColor,
-    emissive: new Color(1, 1, 1), // Color de emisión blanco
-    emissiveIntensity: 0.1, // Intensidad de emisión
+    emissive: new Color(1, 1, 1),
+    emissiveIntensity: 0.1,
   };
 
-  // Ajusta el tamaño de las estrellas
-  const scale = Math.random() * 0.5 + 0.5; // Escala aleatoria
-  const initialPosition = new Vector3(
-    props.position[0] + (Math.random() - 0.5) * 20, // Desplazamiento aleatorio
-    props.position[1] + (Math.random() - 0.5) * 20,
-    props.position[2] + (Math.random() - 0.5) * 20
-  );
+  const scale = Math.random() * 0.5 + 0.5;
 
   return (
     <mesh
       {...props}
       ref={ref}
       scale={[scale, scale, scale]}
-      position={initialPosition}
       onClick={(event) => click(!clicked)}
       onPointerOver={(event) => {
         event.stopPropagation();
@@ -58,6 +54,21 @@ function Star(props) {
     >
       <sphereGeometry />
       <meshStandardMaterial {...materialProps} sizeAttenuation={false} receiveShadow castShadow />
+      {hover && (
+        <Billboard>
+          <Text
+            position={[0, 2, 0]}
+            anchorX="center"
+            anchorY="middle"
+            fontSize={15}
+            color="white"
+            outlineWidth={0.02}
+            outlineColor="black"
+          >
+            {proper}
+          </Text>
+        </Billboard>
+      )}
     </mesh>
   );
 }
@@ -66,7 +77,6 @@ export default function App() {
   const [stars, setStars] = useState([]);
 
   useEffect(() => {
-    // Cargar las estrellas cuando se monta el componente
     loadClosestSupernovae()
       .then((response) => {
         setStars(response.data);
@@ -90,11 +100,12 @@ export default function App() {
 
   return (
     <div className="canvas-container">
-      <Canvas camera={{ position: [0, 0, 30], far: 10000 }} gl={{ clearColor: 'black' }}>
+      <Canvas camera={{ position: [0, 0, 30], far: 10000 }}>
         <ambientLight intensity={2} />
         <pointLight intensity={1} position={[0, 0, 0]} castShadow />
+
         {stars.map((star, index) => (
-          <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} />
+          <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} proper={star.proper} />
         ))}
         <OrbitControls
           enableZoom={true}
