@@ -1,10 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Cloud } from '@react-three/drei';
 import { loadClosestSupernovae } from '../../Services/Services';
 import { Color, Vector3 } from 'three';
-
-// Importa el componente Text de @react-three/drei
 import { Text, Billboard } from '@react-three/drei';
 
 function getColorFromCI(ci) {
@@ -35,10 +33,10 @@ function Star(props) {
   const materialProps = {
     color: materialColor,
     emissive: new Color(1, 1, 1),
-    emissiveIntensity: 0.1,
+    emissiveIntensity: 0.2,
   };
 
-  const scale = Math.random() * 0.5 + 0.5;
+  const scale = Math.random() * 0.8 + 0.8;
 
   return (
     <mesh
@@ -86,21 +84,11 @@ export default function App() {
       });
   }, []);
 
-  useEffect(() => {
-    const resizeCanvas = () => {
-      const canvas = document.querySelector('canvas');
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
-    };
-    window.addEventListener('resize', resizeCanvas);
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, []);
+  
 
   return (
     <div className="canvas-container">
-      <Canvas camera={{ position: [0, 0, 30], far: 10000 }}>
+      <Canvas camera={{ position: [0, 0, 30], far: 10000 }} >
         <ambientLight intensity={2} />
         <pointLight intensity={1} position={[0, 0, 0]} castShadow />
 
@@ -112,8 +100,24 @@ export default function App() {
           enablePan={true}
           enableRotate={true}
           zoomSpeed={4}
-          maxDistance={1200}
+          maxDistance={1000}
         />
+        <Cloud 
+          concentrate= {true} 
+          color="#00FFFF" 
+          seed={2} 
+          position={[0, 0, 0]} 
+          volume={6000} 
+          opacity={0.02}
+          segments={5}
+          castShadow 
+          >
+            <meshStandardMaterial
+            color="#00FFFF"
+            roughness={0.2} 
+            metalness={0.8} 
+            />   
+        </Cloud>
       </Canvas>
     </div>
   );

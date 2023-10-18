@@ -1,5 +1,4 @@
 package nova.risk.novariskapp.controller;
-
 import org.bson.types.ObjectId;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import java.util.Optional;
 
 @RestController
