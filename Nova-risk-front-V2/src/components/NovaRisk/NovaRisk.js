@@ -4,6 +4,7 @@ import { OrbitControls, Cloud } from '@react-three/drei';
 import { loadClosestSupernovae } from '../../Services/Services';
 import { Color, Vector3 } from 'three';
 import { Text, Billboard } from '@react-three/drei';
+import LoadingPopup from '../LoadingPopup';
 
 function getColorFromCI(ci) {
   // Mapea el valor de CI a un color en un gradiente de rojo a azul
@@ -73,22 +74,27 @@ function Star(props) {
 
 export default function App() {
   const [stars, setStars] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadClosestSupernovae()
       .then((response) => {
         setStars(response.data);
+        setLoading(false); // Indicar que la carga ha finalizado
       })
       .catch((error) => {
         console.error('Error al cargar las estrellas:', error);
+        setLoading(false); // También en caso de error
       });
   }, []);
-
+  
   
 
   return (
     <div className="canvas-container">
-      <Canvas camera={{ position: [0, 0, 30], far: 10000 }} >
+      <LoadingPopup message="Loading stars..." loading={loading} />
+      <Canvas camera={{ position: [600, 0, 0]}} >  
+      
         <ambientLight intensity={2} />
         <pointLight intensity={1} position={[0, 0, 0]} castShadow />
 

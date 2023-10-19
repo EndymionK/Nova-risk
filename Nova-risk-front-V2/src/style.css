@@ -561,3 +561,36 @@ button:focus {
   width: 100vw;
   height: 100vh;
 }
+
+/* --------- */
+/* Loading popup */
+/* --------- */
+
+.loading-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para superponer en toda la pantalla */
+  z-index: 9999; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.loading-square {
+  width: 300px; /* Ajusta el tamaño del cuadrado según tus necesidades */
+  height: 100px; /* Ajusta el tamaño del cuadrado según tus necesidades */
+  background: #fff; /* Color de fondo del cuadrado */
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loading-message {
+  margin: 20px !important;
+  font-size: 25px !important;
+  color: #000 !important;
+  justify-content: center !important;
+}
