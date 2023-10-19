@@ -3,8 +3,8 @@ import { Card, Container } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { loadStars, deleteStar } from "../../Services/Services";
-import { Link } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
+import StarName from "./StarName";
 
 const StarsListCard = ({ onEdit }) => {
   const [starsPage, setStarsPage] = useState({ content: [], totalElements: 0 });
@@ -36,41 +36,6 @@ const StarsListCard = ({ onEdit }) => {
       .catch((error) => {
         console.error("Error deleting star:", error);
       });
-  };
-
-  const catalogNames = {
-    proper: "Proper Name",
-    hip: "Hipparcos Catalog",
-    hd: "Henry Draper Catalog",
-    hr: "Harvard Revised Catalog",
-    gl: "Gliese Catalog",
-    bf: "Bayer / Flamsteed Designation",
-  };
-  
-  const getNumberToShow = (star) => {
-    const showValue = (value, catalogName) => {
-      if (value !== null && value !== "") {
-        return `${catalogName}: ${value}`;
-      }
-      return null;
-    };
-  
-    const catalogArray = [
-      showValue(star.proper, catalogNames.proper),
-      showValue(star.hip, catalogNames.hip),
-      showValue(star.hd, catalogNames.hd),
-      showValue(star.hr, catalogNames.hr),
-      showValue(star.gl, catalogNames.gl),
-      showValue(star.bf, catalogNames.bf),
-    ];
-  
-    const validCatalog = catalogArray.find((value) => value !== null);
-  
-    if (validCatalog) {
-      return validCatalog;
-    }
-  
-    return "No catalog number available";
   };
 
   // Función para cambiar la página
@@ -106,11 +71,7 @@ const StarsListCard = ({ onEdit }) => {
         <Card key={star._id} className="mb-3">
           <Card.Body>
             <div className="d-flex justify-content-between mb-1">
-              <div className="fw-bold">
-                <Link to={`/star/${star._id}`} className="link-no-underline">
-                  {getNumberToShow(star)}
-                </Link>
-              </div>
+              <StarName star={star} /> {/* Utiliza el componente StarInfo aquí */}
               <div className="text-muted small">
                 <FontAwesomeIcon
                   icon={faEdit}

@@ -5,29 +5,27 @@ import { loadClosestSupernovae } from '../../Services/Services';
 import { Color, Vector3 } from 'three';
 import { Text, Billboard } from '@react-three/drei';
 import LoadingPopup from '../LoadingPopup';
+import StarIdentifier from './StarIdentifier';
 
 function getColorFromCI(ci) {
-  // Mapea el valor de CI a un color en un gradiente de rojo a azul
+  
   const minCI = -0.5; // Valor mínimo de CI
   const maxCI = 2.0; // Valor máximo de CI
-  const color = new Color();
-
-  // Interpolación lineal para mapear el valor de CI al rango de color
+  const color = new Color(); 
   color.setRGB(
-    (ci - minCI) / (maxCI - minCI), // Componente rojo
-    0, // Componente verde (en este ejemplo, 0)
-    1 - (ci - minCI) / (maxCI - minCI) // Componente azul
+    (ci - minCI) / (maxCI - minCI), 
+    0, 
+    1 - (ci - minCI) / (maxCI - minCI) 
   );
 
   return color;
-  
 }
 
 function Star(props) {
   const ref = useRef();
   const [hover, setHover] = useState(false);
   const [clicked, click] = useState(false);
-  const { ci, proper } = props;
+  const { ci, star } = props;
 
   const materialColor = getColorFromCI(ci);
 
@@ -56,7 +54,7 @@ function Star(props) {
       {hover && (
         <Billboard>
           <Text
-            position={[0, 2, 0]}
+            position={[0, 3, 0]}
             anchorX="center"
             anchorY="middle"
             fontSize={15}
@@ -64,7 +62,7 @@ function Star(props) {
             outlineWidth={0.02}
             outlineColor="black"
           >
-            {proper}
+            {StarIdentifier({star:props.star})}
           </Text>
         </Billboard>
       )}
@@ -80,11 +78,11 @@ export default function App() {
     loadClosestSupernovae()
       .then((response) => {
         setStars(response.data);
-        setLoading(false); // Indicar que la carga ha finalizado
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error al cargar las estrellas:', error);
-        setLoading(false); // También en caso de error
+        setLoading(false);
       });
   }, []);
   
@@ -93,13 +91,13 @@ export default function App() {
   return (
     <div className="canvas-container">
       <LoadingPopup message="Loading stars..." loading={loading} />
-      <Canvas camera={{ position: [600, 0, 0]}} >  
+      <Canvas camera={{ position: [700, 0, 0], far: 7000}} >  
       
         <ambientLight intensity={2} />
         <pointLight intensity={1} position={[0, 0, 0]} castShadow />
 
         {stars.map((star, index) => (
-          <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} proper={star.proper} />
+          <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} star={star} />
         ))}
         <OrbitControls
           enableZoom={true}
