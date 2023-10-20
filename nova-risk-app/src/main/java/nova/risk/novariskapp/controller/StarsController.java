@@ -113,25 +113,16 @@ public class StarsController {
     }
 
     @GetMapping("/ClosestSupernovae")
-    public ResponseEntity<Object> getClosestSupernovae(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "1000") int size) {
+    public ResponseEntity<List<Stars>> getClosestSupernovae() {
         // Consulta las estrellas que cumplen con los criterios en la base de datos
         List<Stars> stars = starsRepository.findBypSupernovaGreaterThanAndDistNotNullOrderByDistAsc(80.0);
 
-        // Filtra las estrellas que tengan campos dist o pSupernova nulos o faltantes
-        stars = stars.stream()
-                .filter(star -> star.getDist() != null && star.getPSupernova() != null)
-                .collect(Collectors.toList());
+        // Limita la lista a las 1000 estrellas más cercanas
+        if (stars.size() > 1000) {
+            stars = stars.subList(0, 1000);
+        }
 
-        // Calcula los índices de inicio y fin para la paginación
-        int startIndex = page * size;
-        int endIndex = Math.min(startIndex + size, stars.size());
-
-        // Limita la lista a las estrellas en la página actual
-        List<Stars> pagedStars = stars.subList(startIndex, endIndex);
-
-        return ResponseEntity.ok(pagedStars);
+        return ResponseEntity.ok(stars);
     }
 
 
