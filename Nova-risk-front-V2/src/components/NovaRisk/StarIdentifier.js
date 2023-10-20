@@ -29,8 +29,7 @@ const StarIdentifier = ({ star }) => {
   const validCatalog = catalogArray.find((value) => value !== null);
 
   return (
-    validCatalog
-    
+    validCatalog    
   );
 };
 export default StarIdentifier;

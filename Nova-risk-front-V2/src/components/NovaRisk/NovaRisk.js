@@ -35,16 +35,16 @@ function Star(props) {
     emissiveIntensity: 0.2,
   };
 
-  const scale = Math.random() * 0.8 + 0.8;
-
   return (
     <mesh
       {...props}
       ref={ref}
-      scale={[scale, scale, scale]}
-      onClick={(event) => click(!clicked)}
+      scale={[1, 1, 1]}
+      onClick={(event) => {
+        click(!clicked);
+        window.location.href = `/star/${star._id}`; 
+      }}
       onPointerOver={(event) => {
-        event.stopPropagation();
         setHover(true);
       }}
       onPointerOut={(event) => setHover(false)}

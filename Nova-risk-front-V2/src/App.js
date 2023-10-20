@@ -38,9 +38,9 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/StarsList" element={<StarsList />} />
+          <Route path="/StarsList" element={<StarsList/>} />
           <Route path="/CreateStar" element={<CreateStar/>} />
-          <Route path="/star/:id" element={<StarDetails />} />
+          <Route path="/star/:id" element={<StarDetails/>} />
           <Route path="/NovaRisk" element={<NovaRisk/>} />
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
