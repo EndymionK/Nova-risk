@@ -27,7 +27,6 @@ const StarIdentifier = ({ star }) => {
   ];
 
   const validCatalog = catalogArray.find((value) => value !== null);
-  console.log(validCatalog);
 
   return (
     validCatalog
