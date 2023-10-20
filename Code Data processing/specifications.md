@@ -17,3 +17,6 @@ Use of variables
 3. Radial Velocity: The radial velocity of a star refers to its motion toward or away from us in the line of sight. This parameter is important because it can indicate whether a star is interacting with another star in a binary or multiple system, which could increase its probability of going nova.
 
 4. Luminosity: Luminosity is a direct measure of the amount of energy a star radiates in all directions. More luminous stars have more energy available for cataclysmic events such as supernovae. Luminosity is related to the star's mass and its evolutionary phase.
+
+
+Wenas
