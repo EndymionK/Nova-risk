@@ -131,6 +131,4 @@ public class StarsController {
     }
 
 
-
-
 }

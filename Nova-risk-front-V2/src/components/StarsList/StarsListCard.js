@@ -5,16 +5,19 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { loadStars, deleteStar } from "../../Services/Services";
 import Pagination from "react-bootstrap/Pagination";
 import StarName from "./StarName";
+import LoadingPopup from "../LoadingPopup";
 
 const StarsListCard = ({ onEdit }) => {
   const [starsPage, setStarsPage] = useState({ content: [], totalElements: 0 });
   const [currentPage, setCurrentPage] = useState(1); // Cambia la página inicial a 1.
   const [starsPerPage] = useState(15);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStars(currentPage - 1, starsPerPage) // Resta 1 para que coincida con la indexación de la página en el backend.
       .then((response) => {
         setStarsPage(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error loading stars:", error);
@@ -67,11 +70,12 @@ const StarsListCard = ({ onEdit }) => {
 
   return (
     <Container fluid className="StarListCard-section">
+      <LoadingPopup message="Loading stars list..." loading={loading} />
       {starsPage.content.map((star) => (
         <Card key={star._id} className="mb-3">
           <Card.Body>
             <div className="d-flex justify-content-between mb-1">
-              <StarName star={star} /> {/* Utiliza el componente StarInfo aquí */}
+              <StarName star={star} /> 
               <div className="text-muted small">
                 <FontAwesomeIcon
                   icon={faEdit}

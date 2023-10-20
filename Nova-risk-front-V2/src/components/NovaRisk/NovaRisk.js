@@ -93,8 +93,8 @@ export default function App() {
       <LoadingPopup message="Loading stars..." loading={loading} />
       <Canvas camera={{ position: [700, 0, 0], far: 7000}} >  
       
-        <ambientLight intensity={2} />
-        <pointLight intensity={1} position={[0, 0, 0]} castShadow />
+        <ambientLight intensity={4} />
+        <pointLight intensity={4} position={[0, 0, 0]}/>
 
         {stars.map((star, index) => (
           <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} star={star} />
@@ -108,16 +108,15 @@ export default function App() {
         />
         <Cloud 
           concentrate= {true} 
-          color="#00FFFF" 
+          color="#E0FFFF" 
           seed={2} 
           position={[0, 0, 0]} 
           volume={6000} 
           opacity={0.02}
           segments={5}
-          castShadow 
           >
             <meshStandardMaterial
-            color="#00FFFF"
+            color="#E0FFFF"
             roughness={0.2} 
             metalness={0.8} 
             />   
