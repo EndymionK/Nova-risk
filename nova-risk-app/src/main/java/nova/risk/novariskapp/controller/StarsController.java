@@ -5,6 +5,8 @@ import nova.risk.novariskapp.repo.StarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.query.Criteria;
+
 
 @RestController
 @RequestMapping("/Stars")
@@ -112,18 +118,23 @@ public class StarsController {
         }
     }
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
     @GetMapping("/ClosestSupernovae")
     public ResponseEntity<List<Stars>> getClosestSupernovae() {
-        // Consulta las estrellas que cumplen con los criterios en la base de datos
-        List<Stars> stars = starsRepository.findBypSupernovaGreaterThanAndDistNotNullOrderByDistAsc(80.0);
+        // Crea una consulta de agregación para MongoDB
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(Criteria.where("pSupernova").gt(80.0).and("dist").exists(true)),
+                Aggregation.sort(Sort.by(Sort.Direction.ASC, "dist")),
+                Aggregation.limit(1000)
+        );
 
-        // Limita la lista a las 1000 estrellas más cercanas
-        if (stars.size() > 1000) {
-            stars = stars.subList(0, 1000);
-        }
+        // Ejecuta la consulta de agregación en la base de datos
+        AggregationResults<Stars> results = mongoTemplate.aggregate(aggregation, "Stars", Stars.class);
+
+        // Obtener los resultados
+        List<Stars> stars = results.getMappedResults();
 
         return ResponseEntity.ok(stars);
     }
-
-
 }
