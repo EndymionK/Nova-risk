@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { loadStars, deleteStar } from "../../Services/Services";
@@ -9,12 +9,14 @@ import LoadingPopup from "../LoadingPopup";
 
 const StarsListCard = ({ onEdit }) => {
   const [starsPage, setStarsPage] = useState({ content: [], totalElements: 0 });
-  const [currentPage, setCurrentPage] = useState(1); // Cambia la página inicial a 1.
+  const [currentPage, setCurrentPage] = useState(1);
   const [starsPerPage] = useState(15);
   const [loading, setLoading] = useState(true);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [starToDelete, setStarToDelete] = useState(null);
 
   useEffect(() => {
-    loadStars(currentPage - 1, starsPerPage) // Resta 1 para que coincida con la indexación de la página en el backend.
+    loadStars(currentPage - 1, starsPerPage)
       .then((response) => {
         setStarsPage(response.data);
         setLoading(false);
@@ -25,9 +27,13 @@ const StarsListCard = ({ onEdit }) => {
   }, [currentPage, starsPerPage]);
 
   const handleDelete = (_id) => {
-    deleteStar(_id)
+    setStarToDelete(_id);
+    setShowDeleteConfirmation(true);
+  };
+
+  const confirmDelete = () => {
+    deleteStar(starToDelete)
       .then(() => {
-        // Actualiza la página actual después de eliminar una estrella.
         loadStars(currentPage - 1, starsPerPage)
           .then((response) => {
             setStarsPage(response.data);
@@ -39,9 +45,14 @@ const StarsListCard = ({ onEdit }) => {
       .catch((error) => {
         console.error("Error deleting star:", error);
       });
+
+    setShowDeleteConfirmation(false);
   };
 
-  // Función para cambiar la página
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+  };
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -75,7 +86,7 @@ const StarsListCard = ({ onEdit }) => {
         <Card key={star._id} className="mb-3">
           <Card.Body>
             <div className="d-flex justify-content-between mb-1">
-              <StarName star={star} /> 
+              <StarName star={star} />
               <div className="text-muted small">
                 <FontAwesomeIcon
                   icon={faEdit}
@@ -97,7 +108,27 @@ const StarsListCard = ({ onEdit }) => {
           </Card.Body>
         </Card>
       ))}
-      {/* Paginación */}
+
+      <Modal show={showDeleteConfirmation} onHide={cancelDelete} className="modal-header">
+        <Modal.Header closeButton className="modal-popup">
+          <Modal.Title>Confirm removal  </Modal.Title>
+          <span className="wave" role="img" aria-labelledby="wave">
+           ❗
+          </span>
+        </Modal.Header>
+        <Modal.Body className="modal-popup">
+          <p>Are you sure you want to remove this star?</p>
+        </Modal.Body>
+        <Modal.Footer className="modal-popup">
+          <Button variant="secondary" onClick={cancelDelete}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete}>
+            Remove
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Pagination className="justify-content-center">
         <Pagination.First
           onClick={() => handlePageChange(1)}

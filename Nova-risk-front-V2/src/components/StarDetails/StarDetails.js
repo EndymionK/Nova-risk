@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { loadStarById } from "../../Services/Services";
 import Particle from "../Particle";
 import "./star-details.css";
+import StarImageSearch from "./StarImageSearch";
 
 const StarDetails = () => {
   const { id } = useParams(); 
@@ -64,16 +65,19 @@ const StarDetails = () => {
     psupernova: "Probability of Supernova",
   };
 
-  return (
-    <section className="ContainerCards">
-      <Particle />
-      {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (
-          <div className="Card" key={index}>
-            <h6><strong>{labelFull}</strong></h6>
-            <p>{star[labelAbbr]}</p>
-          </div>
-      ))}
-    </section>
+  return (   
+    <div>
+    <StarImageSearch starName={star.proper}/>
+      <section className="ContainerCards">
+        <Particle />
+        {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (
+            <div className="Card" key={index}>
+              <h6><strong>{labelFull}</strong></h6>
+              <p>{star[labelAbbr]}</p>
+            </div>
+        ))}
+      </section>
+    </div> 
   );
 };
 

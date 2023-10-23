@@ -575,13 +575,13 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para superponer en toda la pantalla */
-  z-index: 9999; /* Asegúrate de que esté por encima de otros elementos */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999; 
 }
 
 .loading-square {
-  width: 300px; /* Ajusta el tamaño del cuadrado según tus necesidades */
-  height: 100px; /* Ajusta el tamaño del cuadrado según tus necesidades */
+  width: 300px;
+  height: 100px; 
   background: #fff; /* Color de fondo del cuadrado */
   border-radius: 8px;
   text-align: center;
@@ -593,4 +593,20 @@ button:focus {
   font-size: 25px !important;
   color: #000 !important;
   justify-content: center !important;
+}
+
+
+/* --------- */
+/* Modal popup */
+/* --------- */
+
+.modal-content {
+  background-color: rgba(27, 20, 41)!important;
+  color: white !important;
+  border: rgba(27, 20, 41)!important;
+  border-color: rgba(27, 20, 41)!important;
+  font-size: large;
+}
+.modal-header {
+  border-color: rgba(27, 20, 41)!important;  
 }

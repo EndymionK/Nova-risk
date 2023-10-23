@@ -1,9 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Cloud } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Cloud, Text, Billboard } from '@react-three/drei';
 import { loadClosestSupernovae } from '../../Services/Services';
-import { Color, Vector3 } from 'three';
-import { Text, Billboard } from '@react-three/drei';
+import { Color } from 'three';
 import LoadingPopup from '../LoadingPopup';
 import StarIdentifier from './StarIdentifier';
 

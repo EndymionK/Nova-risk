@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import StarsList from "./components/StarsList/StarsList";
 import CreateStar from "./components/CreateStar/CreateStar";
-import StarDetails from "./components/StarsList/StarDetails";
+import StarDetails from "./components/StarDetails/StarDetails";
 import NovaRisk from "./components/NovaRisk/NovaRisk";
 
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 const StarIdentifier = ({ star }) => {
   const catalogNames = {
     hip: "Hip",
