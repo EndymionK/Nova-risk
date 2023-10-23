@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Cloud, Text, Billboard } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Cloud } from '@react-three/drei';
 import { loadClosestSupernovae } from '../../Services/Services';
-import { Color } from 'three';
+import { Color, Vector3 } from 'three';
+import { Text, Billboard } from '@react-three/drei';
 import LoadingPopup from '../LoadingPopup';
 import StarIdentifier from './StarIdentifier';
 
@@ -105,21 +106,6 @@ export default function App() {
           zoomSpeed={4}
           maxDistance={1000}
         />
-        <Cloud 
-          concentrate= {true} 
-          color="#E0FFFF" 
-          seed={2} 
-          position={[0, 0, 0]} 
-          volume={6000} 
-          opacity={0.02}
-          segments={5}
-          >
-            <meshStandardMaterial
-            color="#E0FFFF"
-            roughness={0.2} 
-            metalness={0.8} 
-            />   
-        </Cloud>
       </Canvas>
     </div>
   );
