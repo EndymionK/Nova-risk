@@ -4,6 +4,7 @@ import { loadStarById } from "../../Services/Services";
 import Particle from "../Particle";
 import "./star-details.css";
 import StarImageSearch from "./StarImageSearch";
+import LoadingPopup from "../LoadingPopup";
 
 const StarDetails = () => {
   const { id } = useParams(); 
@@ -21,7 +22,7 @@ const StarDetails = () => {
   }, [id]);
 
   if (!star) {
-    return <div>Loading...</div>; 
+    return <LoadingPopup />;
   }
 
 
@@ -64,10 +65,10 @@ const StarDetails = () => {
     var_max: "Variable Star Maximum Magnitude",
     psupernova: "Probability of Supernova",
   };
-
+//     <StarImageSearch starName={star.proper}/> 
   return (   
     <div>
-    <StarImageSearch starName={star.proper}/>
+      
       <section className="ContainerCards">
         <Particle />
         {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (

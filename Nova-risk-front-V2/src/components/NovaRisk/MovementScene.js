@@ -17,10 +17,10 @@ const MovementScene = () => {
     const handleFocus = () => {
       controls.current.lock();
     };
-    document.addEventListener("click", handleFocus);
+    gl.domElement.addEventListener("pointerdown", handleFocus);
 
     return () => {
-      document.removeEventListener("click", handleFocus);
+      gl.domElement.removeEventListener("pointerdown", handleFocus);
     };
   }, [gl]);
 

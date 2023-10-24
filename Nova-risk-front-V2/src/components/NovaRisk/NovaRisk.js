@@ -72,7 +72,6 @@ function Star(props) {
 export default function App() {
   const [stars, setStars] = useState([]);
   const [loading, setLoading] = useState(true);
-  const canvasRef = useRef();
 
   useEffect(() => {
     loadClosestSupernovae()
