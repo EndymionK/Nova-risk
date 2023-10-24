@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Color, Vector3 } from 'three';
-import { OrbitControls, Text, Billboard } from '@react-three/drei';
+import { Canvas} from '@react-three/fiber';
+import { Color} from 'three';
+import { Text, Billboard } from '@react-three/drei';
 import { loadClosestSupernovae } from '../../Services/Services';
 import LoadingPopup from '../LoadingPopup';
 import StarIdentifier from './StarIdentifier';
+import MovementScene from './MovementScene';
+import { Controls } from './Controls';
 
 function getColorFromCI(ci) {
   const minCI = -0.5;
@@ -70,7 +72,7 @@ function Star(props) {
 export default function App() {
   const [stars, setStars] = useState([]);
   const [loading, setLoading] = useState(true);
-  const controlsRef = useRef();
+  const canvasRef = useRef();
 
   useEffect(() => {
     loadClosestSupernovae()
@@ -90,18 +92,13 @@ export default function App() {
       <Canvas camera={{ position: [700, 0, 0], far: 2000 }}>
         <ambientLight intensity={4} />
         <pointLight intensity={4} position={[0, 0, 0]} />
-        <OrbitControls
-          enableZoom={true}
-          enablePan={true}
-          enableRotate={true}
-          zoomSpeed={4}
-          maxDistance={1000}
-          ref={controlsRef}
-        />
         {stars.map((star, index) => (
           <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} star={star} />
         ))}
+        <MovementScene />
+        <Controls />
       </Canvas>
     </div>
   );
 }
+
