@@ -92,6 +92,10 @@ const StarsListCard = ({ onEdit }) => {
                   icon={faEdit}
                   className="cursor-pointer"
                   onClick={() => onEdit(star)}
+                  style={{
+                    color: "initial",
+                    cursor: "pointer",
+                  }}
                 />
                 <FontAwesomeIcon
                   icon={faTrash}
@@ -100,7 +104,6 @@ const StarsListCard = ({ onEdit }) => {
                   style={{
                     color: "initial",
                     cursor: "pointer",
-                    fontSize: "1rem",
                   }}
                 />
               </div>

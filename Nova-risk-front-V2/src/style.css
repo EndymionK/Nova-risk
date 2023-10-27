@@ -254,12 +254,11 @@ button:focus {
 
 .home-section {
   position: relative;
-  z-index: -1;
+  z-index: 1;
   background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
   background-position: top center;
   background-repeat: no-repeat;
   padding-bottom: 30px !important;
-  padding-top: 30px !important;
 }
 
 .home-content {
@@ -323,7 +322,7 @@ button:focus {
 .home-about-section {
   position: relative;
   padding-bottom: 70px !important;
-  padding-top: 70px !important;
+  z-index: 1;
 }
 
 .home-about-social {
@@ -344,6 +343,11 @@ button:focus {
   padding-top: 50px;
   font-size: 2em !important;
   text-align: left;
+}
+
+.home-about-social-links{
+
+  padding-left: 0rem;
 }
 
 .home-social-icons {
@@ -610,3 +614,66 @@ button:focus {
 .modal-header {
   border-color: rgba(27, 20, 41)!important;  
 }
+
+
+/* --------- */
+/* Curious data */
+/* --------- */
+
+
+.curious-ContainerCards{
+
+  position: relative;
+  top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 80%;
+  margin: 0 auto;
+  
+}
+
+.curious-data {
+  position: relative !important;
+  padding-top: 50x !important;
+  padding-bottom: 30px !important;
+  background-color: transparent !important;
+  gap: 20px !important;
+  border-radius: var(--border-radius)!important;
+}
+
+.curious-data div {
+  background-color: white;
+  border-radius: var(--border-radius)!important;
+}
+
+/* --------- */
+/* Swipertext */
+/* --------- */
+
+.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+

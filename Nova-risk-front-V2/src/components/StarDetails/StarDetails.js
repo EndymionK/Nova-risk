@@ -67,8 +67,7 @@ const StarDetails = () => {
   };
 //     <StarImageSearch starName={star.proper}/> 
   return (   
-    <div>
-      
+    <div>      
       <section className="ContainerCards">
         <Particle />
         {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (

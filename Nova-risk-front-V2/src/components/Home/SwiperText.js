@@ -1,0 +1,73 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { curiousData } from '../../Services/Services';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import { useEffect, useState } from 'react';
+
+export default function SwiperText() {
+
+  const [Data, setData] = useState([]);
+
+  useEffect(() => {
+    curiousData()
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error al cargar los datos curiosos:', error);
+        
+      });
+  }, []); 
+
+  return (
+    <>
+      <Swiper
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={'auto'}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }}
+        pagination={true}
+        modules={[EffectCoverflow, Pagination]}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <p>The number of stars in our database is:</p>
+          <p className='purple'>{Data.quantityStars}</p>           
+        </SwiperSlide>
+        <SwiperSlide>
+          <p>The average probability of a star going Supernova in our database is:</p>
+          <p className='purple'>{(Data.averagepSupernova)} %</p>
+        </SwiperSlide>
+        <SwiperSlide>
+          <p>The average distance from the earth to the stars in our database is:</p>
+          <p className='purple'>{(Data.averageDistance)} parsecs</p>
+        </SwiperSlide>
+        <SwiperSlide>
+          <p>The average luminosity of the stars in our database is:</p>
+          <p className='purple'>{(Data.averageLuminosity)}</p>
+        </SwiperSlide>
+        <SwiperSlide>
+          <p>The average radial velocity of the stars in our database is:</p>
+          <p className='purple'>{(Data.averageRadialVelocity)} </p>
+        </SwiperSlide>
+        <SwiperSlide>
+          <p>The average distance from the earth to the stars in our database is:</p>
+          <p className='purple'>{(Data.averageDistance)} </p>
+        </SwiperSlide>
+        <SwiperSlide>
+          <p>The average magnitude of the stars in our database is:</p>
+          <p className='purple'>{(Data.averageMagnitude)} </p>
+        </SwiperSlide>
+      </Swiper>
+    </>
+  );
+}

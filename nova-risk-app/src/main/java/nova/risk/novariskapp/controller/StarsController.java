@@ -1,4 +1,5 @@
 package nova.risk.novariskapp.controller;
+import nova.risk.novariskapp.model.StarsResume;
 import org.bson.types.ObjectId;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
@@ -7,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -136,5 +139,27 @@ public class StarsController {
         List<Stars> stars = results.getMappedResults();
 
         return ResponseEntity.ok(stars);
+    }
+
+    @Autowired
+    @GetMapping(value = "/StarsResume", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StarsResume> getStarsResume() {
+        Aggregation aggregation;
+        aggregation = Aggregation.newAggregation(
+
+                Aggregation.group()
+                        .count().as("quantityStars")
+                        .avg("pSupernova").as("averagepSupernova")
+                        .avg("dist").as("averageDistance")
+                        .avg("lum").as("averageLuminosity")
+                        .avg("rv").as("averageRadialVelocity")
+                        .avg("mag").as("averageMagnitude")
+        );
+
+        AggregationResults<StarsResume> results = mongoTemplate.aggregate(aggregation, "Stars", StarsResume.class);
+
+        StarsResume starsResume = results.getUniqueMappedResult();
+
+        return ResponseEntity.ok(starsResume);
     }
 }

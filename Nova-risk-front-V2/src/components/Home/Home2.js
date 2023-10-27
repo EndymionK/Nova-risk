@@ -1,29 +1,18 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Tilt from "react-parallax-tilt";
 import { AiFillGithub} from "react-icons/ai";
-import image555446 from "../../Assets/555446.jpg";
-
+import SwiperText from "./SwiperText";
 
 function Home2() {
   return (
     <Container fluid className="home-about-section" id="about">
-      <Container>
-        <Row>
-          <Col md={8} className="home-about-description">
-            <h1 style={{ fontSize: "4em" }}>
-              About <span className="purple"> Nova Risk </span>
-            </h1>
-            <p className="home-about-body" style={{ fontSize: '4em' }}>
-            Welcome to our captivating star catalog, where you can delve into the mysterious and astonishing world of the cosmos. Discover distant stars, explore their unique characteristics, and learn about those that may become supernovae in the near future. Join us on this thrilling journey through space and time.
-            </p>
-          </Col>
-          <Col md={4} className="aboutimage">
-            <Tilt>
-              <img src={image555446} className="img-fluid" alt="aboutimage" />
-            </Tilt>
-          </Col>
+      <Container>      
+        <Row md={8} className="home-about-description">
+          <h1 style={{ fontSize: "4em" }}>
+            About <span className="purple"> Nova Risk </span>
+          </h1>
         </Row>
+        <SwiperText />
         <Row>
           <Col md={12} className="home-about-social">
             <h1>Github profile</h1>
