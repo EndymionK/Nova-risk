@@ -29,10 +29,10 @@ function StarsList() {
       <Container>
         <Row style={{ justifyContent: "center", padding: "10px" }}>
           <Col
-            md={7}
+            md={10}
             style={{
               justifyContent: "center",
-              paddingTop: "50px",
+              paddingTop: "70px",
               paddingBottom: "50px",
             }}
           >

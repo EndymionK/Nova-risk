@@ -307,10 +307,18 @@ button:focus {
   padding-top: 4em !important;
 }
 
+.aboutimage img {
+  border-radius: 50%;
+  box-shadow: -1px 3px 150px 0px rgb(255, 255, 255, 0.33);
+  -webkit-box-shadow: -1px 3px 150px 0px rgb(255, 255, 255, 0.33);
+  -moz-box-shadow: -1px 3px 150px 0px rgb(255, 255, 255, 0.33);
+}
+
 @media (max-width: 767px) {
   .aboutimage {
     padding-top: 2em !important;
     padding-bottom: 2em !important;
+    
   }
 }
 
@@ -662,7 +670,7 @@ button:focus {
   background-size: cover;
   width: 500px;
   height: 300px;
-  background-color: white;
+  background-color: #1b222c;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -670,6 +678,8 @@ button:focus {
   font-size: xx-large;
   border-radius: 8px;
   padding: 10px;
+  color: white;
+
 }
 
 .swiper-slide img {

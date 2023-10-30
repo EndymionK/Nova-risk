@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Keyboard } from 'swiper/modules';
 import { curiousData } from '../../Services/Services';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -28,6 +28,7 @@ export default function SwiperText() {
         grabCursor={true}
         centeredSlides={true}
         slidesPerView={'auto'}
+        keyboard={{enabled:true,}}
         coverflowEffect={{
           rotate: 50,
           stretch: 0,
@@ -35,8 +36,8 @@ export default function SwiperText() {
           modifier: 1,
           slideShadows: true,
         }}
-        pagination={true}
-        modules={[EffectCoverflow, Pagination]}
+        pagination={{clickable: true,}}
+        modules={[EffectCoverflow, Pagination, Keyboard]}
         className="mySwiper"
       >
         <SwiperSlide>

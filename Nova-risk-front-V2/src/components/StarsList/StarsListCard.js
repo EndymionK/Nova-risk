@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Container, Modal, Button } from "react-bootstrap";
+import { Card, Container, Modal, Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { loadStars, deleteStar } from "../../Services/Services";
@@ -10,7 +10,7 @@ import LoadingPopup from "../LoadingPopup";
 const StarsListCard = ({ onEdit }) => {
   const [starsPage, setStarsPage] = useState({ content: [], totalElements: 0 });
   const [currentPage, setCurrentPage] = useState(1);
-  const [starsPerPage] = useState(15);
+  const [starsPerPage] = useState(33);
   const [loading, setLoading] = useState(true);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [starToDelete, setStarToDelete] = useState(null);
@@ -82,35 +82,39 @@ const StarsListCard = ({ onEdit }) => {
   return (
     <Container fluid className="StarListCard-section">
       <LoadingPopup message="Loading stars list..." loading={loading} />
-      {starsPage.content.map((star) => (
-        <Card key={star._id} className="mb-3">
-          <Card.Body>
-            <div className="d-flex justify-content-between mb-1">
-              <StarName star={star} />
-              <div className="text-muted small">
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  className="cursor-pointer"
-                  onClick={() => onEdit(star)}
-                  style={{
-                    color: "initial",
-                    cursor: "pointer",
-                  }}
-                />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  className="cursor-pointer ms-2 trash-icon"
-                  onClick={() => handleDelete(star._id)}
-                  style={{
-                    color: "initial",
-                    cursor: "pointer",
-                  }}
-                />
-              </div>
-            </div>
-          </Card.Body>
-        </Card>
-      ))}
+      <Row>
+        {starsPage.content.map((star) => (
+          <Col key={star._id} md={4}>
+            <Card className="mb-3" >
+              <Card.Body>
+                <div className="d-flex justify-content-between mb-1">
+                  <StarName star={star} />
+                  <div className="text-muted small">
+                    <FontAwesomeIcon
+                      icon={faEdit}
+                      className="cursor-pointer"
+                      onClick={() => onEdit(star)}
+                      style={{
+                        color: "initial",
+                        cursor: "pointer",
+                      }}
+                    />
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      className="cursor-pointer ms-2 trash-icon"
+                      onClick={() => handleDelete(star._id)}
+                      style={{
+                        color: "initial",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
 
       <Modal show={showDeleteConfirmation} onHide={cancelDelete} className="modal-header">
         <Modal.Header closeButton className="modal-popup">

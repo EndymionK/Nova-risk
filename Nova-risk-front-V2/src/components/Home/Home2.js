@@ -9,7 +9,7 @@ function Home2() {
       <Container>      
         <Row md={8} className="home-about-description">
           <h1 style={{ fontSize: "4em" }}>
-            About <span className="purple"> Nova Risk </span>
+            <span className="purple"> Curious </span> Data
           </h1>
         </Row>
         <SwiperText />
