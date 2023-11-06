@@ -4,11 +4,8 @@ import org.bson.types.ObjectId;
 import nova.risk.novariskapp.model.Stars;
 import nova.risk.novariskapp.repo.StarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,27 +19,63 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 
 
 @RestController
 @RequestMapping("/Stars")
 public class StarsController {
     private final StarsRepository starsRepository;
+    private final MongoTemplate mongoTemplate;
 
     @Autowired
-    public StarsController(StarsRepository starsRepository) {
+    public StarsController(StarsRepository starsRepository, MongoTemplate mongoTemplate) {
         this.starsRepository = starsRepository;
+        this.mongoTemplate = mongoTemplate;
     }
+
 
     @GetMapping("")
     public ResponseEntity<Page<Stars>> index(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String search) {
 
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Stars> starsPage = starsRepository.findAll(pageRequest);
-        return ResponseEntity.ok(starsPage);
+
+        // Consulta por igualdad para campos numéricos y consulta por texto para campos de texto
+        Criteria criteria = new Criteria().orOperator(
+                Criteria.where("hip").regex(search, "i"),
+                Criteria.where("hd").regex(search, "i"),
+                Criteria.where("hr").regex(search, "i"),
+                Criteria.where("bf").regex(search, "i"),
+                Criteria.where("gl").regex(search, "i"),
+                Criteria.where("proper").regex(search, "i")
+        );
+
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(criteria),
+                Aggregation.sort(Sort.by(Sort.Order.asc("your_sorting_field"))), // Agrega un campo de clasificación adecuado
+                Aggregation.skip((long) pageRequest.getPageNumber() * pageRequest.getPageSize()),
+                Aggregation.limit(pageRequest.getPageSize())
+        );
+
+        Query countQuery = new Query(criteria);
+        long totalResults = mongoTemplate.count(countQuery, Stars.class);
+
+        AggregationResults<Stars> results = mongoTemplate.aggregate(aggregation, "Stars", Stars.class);
+        List<Stars> filteredStars = results.getMappedResults();
+
+        Page<Stars> filteredStarsPage = new PageImpl<>(filteredStars, pageRequest, totalResults);
+
+        return ResponseEntity.ok(filteredStarsPage);
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Stars> getStarById(@PathVariable String id) {
@@ -122,7 +155,6 @@ public class StarsController {
     }
 
     @Autowired
-    private MongoTemplate mongoTemplate;
     @GetMapping("/ClosestSupernovae")
     public ResponseEntity<List<Stars>> getClosestSupernovae() {
         // Crea una consulta de agregación para MongoDB

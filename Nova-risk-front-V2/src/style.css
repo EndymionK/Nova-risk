@@ -464,14 +464,12 @@ button:focus {
 
 .StarList-section {
   position: relative !important;
-  padding-top: 50x !important;
   padding-bottom: 30px !important;
   color: white !important;
 }
 
 .StarListCard-section {
   position: relative !important;
-  padding-top: 50x !important;
   padding-bottom: 30px !important;
   color: rgb(0, 0, 0) !important;
 }
@@ -687,3 +685,14 @@ button:focus {
   width: 100%;
 }
 
+/* --------- */
+/* SearchBar */
+/* --------- */
+
+.search-bar-container {
+  padding-left: 20% !important;
+  padding-right: 20% !important;
+  justify-content: center !important; /* Centra horizontalmente */
+  align-items: center !important; /* Centra verticalmente */
+  padding-bottom: 20px;
+}

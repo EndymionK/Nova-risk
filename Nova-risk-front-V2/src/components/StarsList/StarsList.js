@@ -33,7 +33,6 @@ function StarsList() {
             style={{
               justifyContent: "center",
               paddingTop: "70px",
-              paddingBottom: "50px",
             }}
           >
             <h1 style={{ fontSize: "2.1em", paddingBottom: "20px" }}>
