@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { loadStars } from "../../Services/Services"; // Asegúrate de importar loadStars desde el archivo correcto
+
 
 export default function SearchBar({ onSearch }) {
   const [searchText, setSearchText] = useState("");
@@ -10,7 +10,7 @@ export default function SearchBar({ onSearch }) {
   };
 
   const handleSearch = () => {
-    onSearch(searchText); // Llama a la función onSearch con el texto de búsqueda
+    onSearch(searchText); 
   };
 
   return (

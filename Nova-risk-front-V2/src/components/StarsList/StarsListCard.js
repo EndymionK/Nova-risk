@@ -15,8 +15,7 @@ const StarsListCard = ({ onEdit }) => {
   const [loading, setLoading] = useState(true);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [starToDelete, setStarToDelete] = useState(null);
-  const [searchText, setSearchText] = useState(""); // Nuevo estado para el texto de búsqueda
-  const [searchResults, setSearchResults] = useState([]); // Nuevo estado para los resultados de búsqueda
+  const [searchText, setSearchText] = useState(""); 
 
   const renderPaginationItems = () => {
     const paginationItems = [];
@@ -38,8 +37,10 @@ const StarsListCard = ({ onEdit }) => {
     return paginationItems;
   };
 
-  // Función para cargar estrellas con búsqueda
   const loadStarsBySearch = () => {
+    console.log("currentPage:", currentPage);
+    console.log("starsPerPage:", starsPerPage);
+    console.log("searchText:", searchText);
     loadStars(currentPage - 1, starsPerPage, searchText)
       .then((response) => {
         setStarsPage(response.data);
@@ -50,10 +51,6 @@ const StarsListCard = ({ onEdit }) => {
       });
   };
 
-  useEffect(() => {
-    loadStarsBySearch();
-  }, [currentPage, starsPerPage, searchText]); // Efecto se dispara cuando cambian currentPage, starsPerPage o searchText
-
   const handleDelete = (_id) => {
     setStarToDelete(_id);
     setShowDeleteConfirmation(true);
@@ -62,7 +59,7 @@ const StarsListCard = ({ onEdit }) => {
   const confirmDelete = () => {
     deleteStar(starToDelete)
       .then(() => {
-        loadStarsBySearch(); // Cargar estrellas después de eliminar
+        loadStarsBySearch();
       })
       .catch((error) => {
         console.error("Error deleting star:", error);
@@ -79,84 +76,85 @@ const StarsListCard = ({ onEdit }) => {
     setCurrentPage(pageNumber);
   };
 
+  useEffect(() => {
+    loadStarsBySearch();
+  }, [currentPage, starsPerPage, searchText]);
+
   const totalPages = Math.ceil(starsPage.totalElements / starsPerPage);
 
-  const handleSearch = () => {
-    setCurrentPage(1); // Restablecer la página a 1 al buscar
-    setSearchResults(searchText); // Actualizar el estado de búsqueda
-    loadStarsBySearch(); // Cargar estrellas con el texto de búsqueda
+  const handleSearch = (searchText) => {
+    setCurrentPage(1);
+    setSearchText(searchText);
   };
 
   return (
     <Container fluid className="StarListCard-section">
       <LoadingPopup message="Loading stars list..." loading={loading} />
-      <SearchBar onSearch={handleSearch} /> {/* Pasar la función de búsqueda a SearchBar */}
+      <SearchBar onSearch={handleSearch} />
       <Row>
-        {searchText ? (
-          searchResults.map((star) => (
-            <Col key={star._id} md={4}>
-              <Card className="mb-3">
-                <Card.Body>
-                  <div className="d-flex justify-content-between mb-1">
-                    <StarName star={star} />
-                    <div className="text-muted small">
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="cursor-pointer"
-                        onClick={() => onEdit(star)}
-                        style={{
-                          color: "initial",
-                          cursor: "pointer",
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="cursor-pointer ms-2 trash-icon"
-                        onClick={() => handleDelete(star._id)}
-                        style={{
-                          color: "initial",
-                          cursor: "pointer",
-                        }}
-                      />
+        {searchText
+          ? starsPage.content.map((star) => (
+              <Col key={star._id} md={4}>
+                <Card className="mb-3">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between mb-1">
+                      <StarName star={star} />
+                      <div className="text-muted small">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="cursor-pointer"
+                          onClick={() => onEdit(star)}
+                          style={{
+                            color: "initial",
+                            cursor: "pointer",
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="cursor-pointer ms-2 trash-icon"
+                          onClick={() => handleDelete(star._id)}
+                          style={{
+                            color: "initial",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        ) : (
-          starsPage.content.map((star) => (
-            <Col key={star._id} md={4}>
-              <Card className="mb-3">
-                <Card.Body>
-                  <div className="d-flex justify-content-between mb-1">
-                    <StarName star={star} />
-                    <div className="text-muted small">
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        className="cursor-pointer"
-                        onClick={() => onEdit(star)}
-                        style={{
-                          color: "initial",
-                          cursor: "pointer",
-                        }}
-                      />
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="cursor-pointer ms-2 trash-icon"
-                        onClick={() => handleDelete(star._id)}
-                        style={{
-                          color: "initial",
-                          cursor: "pointer",
-                        }}
-                      />
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          : starsPage.content.map((star) => (
+              <Col key={star._id} md={4}>
+                <Card className="mb-3">
+                  <Card.Body>
+                    <div className="d-flex justify-content-between mb-1">
+                      <StarName star={star} />
+                      <div className="text-muted small">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="cursor-pointer"
+                          onClick={() => onEdit(star)}
+                          style={{
+                            color: "initial",
+                            cursor: "pointer",
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="cursor-pointer ms-2 trash-icon"
+                          onClick={() => handleDelete(star._id)}
+                          style={{
+                            color: "initial",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
       </Row>
 
       <Modal
@@ -165,9 +163,9 @@ const StarsListCard = ({ onEdit }) => {
         className="modal-header"
       >
         <Modal.Header closeButton className="modal-popup">
-          <Modal.Title>Confirm removal  </Modal.Title>
+          <Modal.Title>Confirm removal</Modal.Title>
           <span className="wave" role="img" aria-labelledby="wave">
-           ❗
+            ❗
           </span>
         </Modal.Header>
         <Modal.Body className="modal-popup">
@@ -194,11 +192,7 @@ const StarsListCard = ({ onEdit }) => {
         />
         {renderPaginationItems().map((item, index) => (
           <React.Fragment key={index}>
-            {item === "ellipsis" ? (
-              <Pagination.Ellipsis disabled />
-            ) : (
-              item
-            )}
+            {item === "ellipsis" ? <Pagination.Ellipsis disabled /> : item}
           </React.Fragment>
         ))}
         <Pagination.Next

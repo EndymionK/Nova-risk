@@ -10,6 +10,8 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
+        System.out.println("Cors funciona  ");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("http://localhost:3000"); // Reemplaza con el origen de tu frontend
