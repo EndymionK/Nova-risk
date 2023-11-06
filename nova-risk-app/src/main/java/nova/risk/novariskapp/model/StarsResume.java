@@ -27,9 +27,7 @@ public class StarsResume {
         this.averageLuminosity = averageLuminosity;
     }
 
-    public void setAverageRadialVelocity(double averageRadialVelocity) {
-        this.averageRadialVelocity = averageRadialVelocity;
-    }
+    public void setAverageRadialVelocity(double averageRadialVelocity) {this.averageRadialVelocity = averageRadialVelocity;}
 
     public void setAverageMagnitude(double averageMagnitude) {
         this.averageMagnitude = averageMagnitude;

@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Stars {
     @Id
     private String _id;
-    private Double hip;
-    private Double hd;
-    private Double hr;
+    private String hip;
+    private String hd;
+    private String hr;
     private String gl;
     private String bf;
     private String proper;
