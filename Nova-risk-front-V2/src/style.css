@@ -661,6 +661,10 @@ button:focus {
   width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
+  overflow: clip; /* Agregar esta línea para evitar recorte */
+  padding-left: 10%;
+  padding-right: 10%;
+
 }
 
 .swiper-slide {
@@ -692,7 +696,7 @@ button:focus {
 .search-bar-container {
   padding-left: 20% !important;
   padding-right: 20% !important;
-  justify-content: center !important; /* Centra horizontalmente */
-  align-items: center !important; /* Centra verticalmente */
+  justify-content: center !important; 
+  align-items: center !important; 
   padding-bottom: 20px;
 }

@@ -38,9 +38,6 @@ const StarsListCard = ({ onEdit }) => {
   };
 
   const loadStarsBySearch = () => {
-    console.log("currentPage:", currentPage);
-    console.log("starsPerPage:", starsPerPage);
-    console.log("searchText:", searchText);
     loadStars(currentPage - 1, starsPerPage, searchText)
       .then((response) => {
         setStarsPage(response.data);
@@ -80,7 +77,8 @@ const StarsListCard = ({ onEdit }) => {
     loadStarsBySearch();
   }, [currentPage, starsPerPage, searchText]);
 
-  const totalPages = Math.ceil(starsPage.totalElements / starsPerPage);
+  const totalPages = Math.ceil(starsPage.totalElements / starsPerPage) || 1;
+
 
   const handleSearch = (searchText) => {
     setCurrentPage(1);

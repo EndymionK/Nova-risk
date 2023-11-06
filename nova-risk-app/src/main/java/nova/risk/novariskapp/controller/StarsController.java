@@ -45,19 +45,17 @@ public class StarsController {
 
         PageRequest pageRequest = PageRequest.of(page, size);
 
-        // Consulta por igualdad para campos numéricos y consulta por texto para campos de texto
         Criteria criteria = new Criteria().orOperator(
+                Criteria.where("proper").regex(search, "i"),
                 Criteria.where("hip").regex(search, "i"),
                 Criteria.where("hd").regex(search, "i"),
                 Criteria.where("hr").regex(search, "i"),
                 Criteria.where("bf").regex(search, "i"),
-                Criteria.where("gl").regex(search, "i"),
-                Criteria.where("proper").regex(search, "i")
+                Criteria.where("gl").regex(search, "i")
         );
 
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(criteria),
-                Aggregation.sort(Sort.by(Sort.Order.asc("your_sorting_field"))), // Agrega un campo de clasificación adecuado
                 Aggregation.skip((long) pageRequest.getPageNumber() * pageRequest.getPageSize()),
                 Aggregation.limit(pageRequest.getPageSize())
         );
