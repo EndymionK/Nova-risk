@@ -54,15 +54,11 @@ export default function SwiperText() {
         </SwiperSlide>
         <SwiperSlide>
           <p>The average luminosity of the stars in our database is:</p>
-          <p className='purple'>{(Data.averageLuminosity)}</p>
+          <p className='purple'>{(Data.averageLuminosity)} lums</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average radial velocity of the stars in our database is:</p>
-          <p className='purple'>{(Data.averageRadialVelocity)} </p>
-        </SwiperSlide>
-        <SwiperSlide>
-          <p>The average distance from the earth to the stars in our database is:</p>
-          <p className='purple'>{(Data.averageDistance)} </p>
+          <p className='purple'>{(Data.averageRadialVelocity)} km/sec</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average magnitude of the stars in our database is:</p>

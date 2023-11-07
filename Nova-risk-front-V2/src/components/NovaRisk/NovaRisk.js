@@ -7,6 +7,7 @@ import LoadingPopup from '../LoadingPopup';
 import StarIdentifier from './StarIdentifier';
 import MovementScene from './MovementScene';
 import { Controls } from './Controls';
+import { Modal, Button } from 'react-bootstrap';
 
 function getColorFromCI(ci) {
   const minCI = -0.5;
@@ -72,6 +73,8 @@ function Star(props) {
 export default function App() {
   const [stars, setStars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(true);
+
 
   useEffect(() => {
     loadClosestSupernovae()
@@ -88,6 +91,24 @@ export default function App() {
   return (
     <div className="canvas-container">
       <LoadingPopup message="Loading stars..." loading={loading} />
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton className="modal-popup">
+          <Modal.Title>Nova Risk</Modal.Title>
+          <span className="wave" role="img" aria-labelledby="wave">
+            🌟
+          </span>
+        </Modal.Header>
+        <Modal.Body>
+          <p>This 3D scene represents the 1000 stars closest to Earth with a high probability of becoming supernovas. You can use the W A S D keys to move freely within the scene and use the cursor to click on a star to get more detailed information.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" centered onClick={() => setShowModal(false)}>
+            Ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Canvas camera={{ position: [700, 0, 0], far: 2000 }}>
         <ambientLight intensity={4} />
         <pointLight intensity={4} position={[0, 0, 0]} />

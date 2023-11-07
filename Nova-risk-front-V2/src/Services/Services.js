@@ -30,7 +30,6 @@ export const loadClosestSupernovae = () => {
   return axios.get('http://localhost:8080/Stars/ClosestSupernovae');
 };
 
-
 export const curiousData = () => {
   return axios.get('http://localhost:8080/Stars/StarsResume')
 }

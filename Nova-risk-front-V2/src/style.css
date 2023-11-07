@@ -246,6 +246,8 @@ button:focus {
   width: 100%;
   height: 100%;
   z-index: -1;
+  opacity: 0.85;
+  color: rgb(154, 173, 12);
 }
 
 .home-header {

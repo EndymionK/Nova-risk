@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.RestController;
@@ -174,7 +176,6 @@ public class StarsController {
     public ResponseEntity<StarsResume> getStarsResume() {
         Aggregation aggregation;
         aggregation = Aggregation.newAggregation(
-
                 Aggregation.group()
                         .count().as("quantityStars")
                         .avg("pSupernova").as("averagepSupernova")
@@ -188,6 +189,23 @@ public class StarsController {
 
         StarsResume starsResume = results.getUniqueMappedResult();
 
+        if (starsResume != null) {
+            // Redondear los valores a dos decimales
+            starsResume.setAveragepSupernova(roundToTwoDecimalPlaces(starsResume.getAveragepSupernova()));
+            starsResume.setAverageDistance(roundToTwoDecimalPlaces(starsResume.getAverageDistance()));
+            starsResume.setAverageLuminosity(roundToTwoDecimalPlaces(starsResume.getAverageLuminosity()));
+            starsResume.setAverageRadialVelocity(roundToTwoDecimalPlaces(starsResume.getAverageRadialVelocity()));
+            starsResume.setAverageMagnitude(roundToTwoDecimalPlaces(starsResume.getAverageMagnitude()));
+        }
+
         return ResponseEntity.ok(starsResume);
     }
+
+    // Función para redondear un número a dos decimales
+    private double roundToTwoDecimalPlaces(double value) {
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
 }
