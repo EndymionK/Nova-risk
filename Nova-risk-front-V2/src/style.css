@@ -294,7 +294,7 @@ button:focus {
 .Typewriter__wrapper {
   font-size: 2.2em !important;
   color: #be6adf !important;
-  font-weight: 600 !important;
+  font-weight: 600;
 }
 .Typewriter__cursor {
   font-size: 2.4em !important;
@@ -304,7 +304,7 @@ button:focus {
 @media (max-width: 767px) {
   .Typewriter__wrapper {
     font-size: 1.4em !important;
-    font-weight: 500 !important;
+    font-weight: 500;
     position: absolute !important;
   }
   .Typewriter__cursor {
@@ -561,8 +561,8 @@ button:focus {
 
 .StarDetails-section {
   position: relative !important;
-  padding-top: 500x !important;
-  padding-bottom: px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
   color: white !important;
 }
 

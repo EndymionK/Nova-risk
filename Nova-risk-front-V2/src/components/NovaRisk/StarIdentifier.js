@@ -30,4 +30,5 @@ const StarIdentifier = ({ star }) => {
     validCatalog    
   );
 };
+
 export default StarIdentifier;

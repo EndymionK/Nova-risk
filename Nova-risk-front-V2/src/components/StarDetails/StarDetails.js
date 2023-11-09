@@ -6,26 +6,36 @@ import "./star-details.css";
 import LoadingPopup from "../LoadingPopup";
 import astronomer from "../../Assets/astronomer.png";
 
-
 const StarDetails = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [star, setStar] = useState(null);
+  const [starname, setStarName] = useState(null);
 
   useEffect(() => {
-    
     loadStarById(id)
       .then((response) => {
-        setStar(response.data); 
+        setStar(response.data);
+        const starIdentifierValue = getStarIdentifierValue(response.data);
+        setStarName(starIdentifierValue);
       })
       .catch((error) => {
         console.error("Error loading star details:", error);
       });
   }, [id]);
 
+  const getStarIdentifierValue = (starData) => {
+    const catalogNames = ["proper", "hip", "hd", "hr", "gl", "bf"];
+    for (const catalog of catalogNames) {
+      if (starData[catalog]) {
+        return starData[catalog];
+      }
+    }
+    return null;
+  };
+
   if (!star) {
     return <LoadingPopup />;
   }
-
 
   const labelMappings = {
     hip: "Hipparcos Catalog Id",
@@ -67,29 +77,32 @@ const StarDetails = () => {
     psupernova: "Probability of Supernova",
   };
 
-  return (   
-    <div className="StarDetails-section">  
-      <Particle /> 
+  return (
+    <div className="StarDetails-section">
+      <Particle />
       <section className="Astronomer-section">
         <div className="Astronomer-container">
           <div className="Astronomer-text">
-            <h2>Star Details</h2>
+            <h2 style={{ color: 'purple',fontWeight: 'bold' }}>Star Details</h2>
+
             <p>
-              This is the information of the star you have selected, if you want to know more about the star, you can click on the button below.
+              You have selected a star, and here are some key details about it. Explore the mysteries of the universe through this celestial information.
             </p>
           </div>
-          <img src={astronomer} alt="Imagen" className="astronomer-img" />
+          <img src={astronomer} alt="Astronomer" className="astronomer-img" />
         </div>
-      </section>   
+      </section>
       <section className="ContainerCards">
         {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (
-            <div className="Card" key={index}>
-              <h6><strong>{labelFull}</strong></h6>
-              <p>{star[labelAbbr]}</p>
-            </div>
+          <div className="Card" key={index}>
+            <h6>
+              <strong>{labelFull}</strong>
+            </h6>
+            <p>{star[labelAbbr]}</p>
+          </div>
         ))}
       </section>
-    </div> 
+    </div>
   );
 };
 
