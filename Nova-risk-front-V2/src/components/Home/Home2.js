@@ -30,6 +30,7 @@ function Home2() {
               </li>
             </ul>
           </Col>
+              
         </Row>
       </Container>
     </Container>

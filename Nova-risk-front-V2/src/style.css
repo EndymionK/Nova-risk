@@ -246,8 +246,17 @@ button:focus {
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: 0.85;
   color: rgb(154, 173, 12);
+}
+
+.home-bg {
+  position: relative;
+  z-index: 1;
+  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-attachment: fixed;
 }
 
 .home-header {
@@ -257,7 +266,6 @@ button:focus {
 .home-section {
   position: relative;
   z-index: 1;
-  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
   background-position: top center;
   background-repeat: no-repeat;
   padding-bottom: 30px !important;
@@ -330,6 +338,7 @@ button:focus {
 }
 
 .home-about-section {
+  
   position: relative;
   padding-bottom: 70px !important;
   z-index: 1;
@@ -462,12 +471,26 @@ button:focus {
   padding-top: 80px !important;
   padding-bottom: 30px !important;
   color: white !important;
+  position: relative;
+  z-index: 1;
+  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-attachment: fixed;
 }
 
 .StarList-section {
   position: relative !important;
   padding-bottom: 30px !important;
   color: white !important;
+  position: relative;
+  z-index: 1;
+  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-attachment: fixed;
 }
 
 .StarListCard-section {
@@ -702,3 +725,18 @@ button:focus {
   align-items: center !important; 
   padding-bottom: 20px;
 }
+
+/* --------- */
+/* StarDetails */
+/* --------- */
+
+.StarDetails-section{
+  position: relative;
+  z-index: 1;
+  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-attachment: fixed;
+}
+

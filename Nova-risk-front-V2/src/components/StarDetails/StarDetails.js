@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { loadStarById } from "../../Services/Services";
 import Particle from "../Particle";
 import "./star-details.css";
-import StarImageSearch from "./StarImageSearch";
 import LoadingPopup from "../LoadingPopup";
+import astronomer from "../../Assets/astronomer.png";
+
 
 const StarDetails = () => {
   const { id } = useParams(); 
@@ -65,11 +66,22 @@ const StarDetails = () => {
     var_max: "Variable Star Maximum Magnitude",
     psupernova: "Probability of Supernova",
   };
-//     <StarImageSearch starName={star.proper}/> 
+
   return (   
-    <div>      
+    <div className="StarDetails-section">  
+      <Particle /> 
+      <section className="Astronomer-section">
+        <div className="Astronomer-container">
+          <div className="Astronomer-text">
+            <h2>Star Details</h2>
+            <p>
+              This is the information of the star you have selected, if you want to know more about the star, you can click on the button below.
+            </p>
+          </div>
+          <img src={astronomer} alt="Imagen" className="astronomer-img" />
+        </div>
+      </section>   
       <section className="ContainerCards">
-        <Particle />
         {Object.entries(labelMappings).map(([labelAbbr, labelFull], index) => (
             <div className="Card" key={index}>
               <h6><strong>{labelFull}</strong></h6>
