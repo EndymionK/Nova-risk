@@ -3,24 +3,31 @@ import axios from 'axios';
 const apiBaseUrl = 'https://novarisk-back.azurewebsites.net';
 
 // Función genérica para manejar las solicitudes y manejar los encabezados CORS
+const handleErrors = (error) => {
+  console.error('Error en la solicitud:', error);
+  throw error;
+};
+
 const sendRequest = async (method, endpoint, data = null) => {
   try {
+    const url = `${apiBaseUrl}/${endpoint}`;
+    console.log(`Enviando solicitud a ${url}`);
     const response = await axios({
       method,
-      url: `${apiBaseUrl}/${endpoint}`,
+      url,
       data,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'  // O especifica tu dominio
-        // Puedes agregar más encabezados según sea necesario
       },
     });
-
+    console.log(`Respuesta recibida:`, response.data);
     return response.data;
   } catch (error) {
-    throw error;
+    handleErrors(error);
   }
 };
+
+
 
 export const loadStars = (page, size, search = "") => {
   return sendRequest('get', `Stars?page=${page}&size=${size}&search=${search}`);
@@ -47,5 +54,10 @@ export const loadClosestSupernovae = () => {
 };
 
 export const curiousData = () => {
-  return sendRequest('get', 'Stars/StarsResume');
+  return sendRequest('get', 'Stars/StarsResume')
+    .catch(error => {
+      handleErrors(error);
+      return {}; // Retorna un objeto vacío en caso de error
+    });
 };
+

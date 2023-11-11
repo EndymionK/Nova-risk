@@ -7,19 +7,37 @@ import 'swiper/css/pagination';
 import { useEffect, useState } from 'react';
 
 export default function SwiperText() {
-
-  const [Data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     curiousData()
-      .then((response) => {
-        setData(response.data);
+      .then(response => {
+        console.log("Datos recibidos:", response);
+
+        // Verifica si la respuesta no es undefined
+        if (response) {
+          setData(response);
+        }
+        setLoading(false);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error al cargar los datos curiosos:', error);
-        
+        setLoading(false);
       });
-  }, []); 
+  }, []);
+
+  console.log("Datos en el componente:", data);
+
+  if (loading) {
+    // Muestra un mensaje de carga mientras los datos se están obteniendo
+    return <p>Cargando datos...</p>;
+  }
+
+  if (!data || Object.keys(data).length === 0) {
+    // Muestra un mensaje si los datos no se pudieron obtener o están vacíos
+    return <p>No se pudieron cargar los datos.</p>;
+  }
 
   return (
     <>
@@ -42,27 +60,27 @@ export default function SwiperText() {
       >
         <SwiperSlide>
           <p>The number of stars in our database is:</p>
-          <p className='purple'>{Data.quantityStars}</p>           
+          <p className='purple'>{data.quantityStars}</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average probability of a star going Supernova in our database is:</p>
-          <p className='purple'>{(Data.averagepSupernova)} %</p>
+          <p className='purple'>{data.averagepSupernova} %</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average distance from the earth to the stars in our database is:</p>
-          <p className='purple'>{(Data.averageDistance)} parsecs</p>
+          <p className='purple'>{data.averageDistance} parsecs</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average luminosity of the stars in our database is:</p>
-          <p className='purple'>{(Data.averageLuminosity)} lums</p>
+          <p className='purple'>{data.averageLuminosity} lums</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average radial velocity of the stars in our database is:</p>
-          <p className='purple'>{(Data.averageRadialVelocity)} km/sec</p>
+          <p className='purple'>{data.averageRadialVelocity} km/sec</p>
         </SwiperSlide>
         <SwiperSlide>
           <p>The average magnitude of the stars in our database is:</p>
-          <p className='purple'>{(Data.averageMagnitude)} </p>
+          <p className='purple'>{data.averageMagnitude}</p>
         </SwiperSlide>
       </Swiper>
     </>
