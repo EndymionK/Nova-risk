@@ -26,7 +26,7 @@ function Home() {
                 <strong className="main-name"> Stars Catalog </strong>
               </h1>
 
-              <div style={{ padding: 50, textAlign: "left" }}>
+              <div style={{ padding: 50, textAlign: "left", height:"250px" }}>
                 <Type />
               </div>
             </Col>
