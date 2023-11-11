@@ -1,35 +1,51 @@
 import axios from 'axios';
 
-export const loadStars = (page, size, search = "") => {
-  return axios.get(`https://novarisk-back.azurewebsites.net/Stars?page=${page}&size=${size}&search=${search}`);
-};
+const apiBaseUrl = 'https://novarisk-back.azurewebsites.net';
 
-export const deleteStar = (_id) => {
-    return axios.delete(`https://novarisk-back.azurewebsites.net/Stars/${_id}`)
-};
+// Función genérica para manejar las solicitudes y manejar los encabezados CORS
+const sendRequest = async (method, endpoint, data = null) => {
+  try {
+    const response = await axios({
+      method,
+      url: `${apiBaseUrl}/${endpoint}`,
+      data,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'  // O especifica tu dominio
+        // Puedes agregar más encabezados según sea necesario
+      },
+    });
 
-export const createStar = (values) => {
-    return axios.post('https://novarisk-back.azurewebsites.net/Stars', values)            
-}
-
-export const loadStarById = (id) => {
-    return axios.get(`https://novarisk-back.azurewebsites.net/Stars/${id}`)
-}
-
-export const updateStar = async (id, updatedStarData) => {
-    console.log(id)
-    try {
-    const response = await axios.put(`https://novarisk-back.azurewebsites.net/Stars/${id}`, updatedStarData);
     return response.data;
   } catch (error) {
     throw error;
   }
-  };
+};
+
+export const loadStars = (page, size, search = "") => {
+  return sendRequest('get', `Stars?page=${page}&size=${size}&search=${search}`);
+};
+
+export const deleteStar = (_id) => {
+  return sendRequest('delete', `Stars/${_id}`);
+};
+
+export const createStar = (values) => {
+  return sendRequest('post', 'Stars', values);
+};
+
+export const loadStarById = (id) => {
+  return sendRequest('get', `Stars/${id}`);
+};
+
+export const updateStar = (id, updatedStarData) => {
+  return sendRequest('put', `Stars/${id}`, updatedStarData);
+};
 
 export const loadClosestSupernovae = () => {
-  return axios.get('https://novarisk-back.azurewebsites.net/Stars/ClosestSupernovae');
+  return sendRequest('get', 'Stars/ClosestSupernovae');
 };
 
 export const curiousData = () => {
-  return axios.get('https://novarisk-back.azurewebsites.net/Stars/StarsResume')
-}
+  return sendRequest('get', 'Stars/StarsResume');
+};
