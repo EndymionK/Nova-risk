@@ -5,7 +5,7 @@ const apiBaseUrl = 'https://novarisk-back.azurewebsites.net';
 // Función genérica para manejar las solicitudes y manejar los encabezados CORS
 const handleErrors = (error) => {
   console.error('Error en la solicitud:', error);
-  throw error;
+  return error;
 };
 
 const sendRequest = async (method, endpoint, data = null) => {
@@ -20,12 +20,19 @@ const sendRequest = async (method, endpoint, data = null) => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(`Respuesta recibida:`, response.data);
-    return response.data;
+
+    if (response.headers['content-type'] && response.headers['content-type'].includes('application/json')) {
+      console.log(`Respuesta recibida en services:`, response.data);
+      return response.data;
+    } else {
+      console.log(`Respuesta recibida en services:`, response);
+      return response;
+    }
   } catch (error) {
     handleErrors(error);
   }
 };
+
 
 
 

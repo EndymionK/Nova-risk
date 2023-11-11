@@ -10,18 +10,32 @@ const StarDetails = () => {
   const { id } = useParams();
   const [star, setStar] = useState(null);
   const [starname, setStarName] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStarById(id)
       .then((response) => {
-        setStar(response.data);
-        const starIdentifierValue = getStarIdentifierValue(response.data);
-        setStarName(starIdentifierValue);
+        console.log("Respuesta del servicio (StarDetails):", response);
+        console.log("Datos de la estrella:", response);
+  
+        if (response && response) {
+          setStar(response);
+  
+          const starIdentifierValue = getStarIdentifierValue(response);
+          setStarName(starIdentifierValue || "Nombre no disponible"); // Manejo de valor undefined
+  
+          setLoading(false);
+        } else {
+          console.error("La respuesta del servicio no contiene datos válidos (StarDetails).");
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.error("Error loading star details:", error);
+        setLoading(false);
       });
   }, [id]);
+  
 
   const getStarIdentifierValue = (starData) => {
     const catalogNames = ["proper", "hip", "hd", "hr", "gl", "bf"];

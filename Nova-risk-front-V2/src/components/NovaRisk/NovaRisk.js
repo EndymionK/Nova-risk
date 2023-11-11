@@ -79,7 +79,7 @@ export default function App() {
   useEffect(() => {
     loadClosestSupernovae()
       .then((response) => {
-        setStars(response.data);
+        setStars(response);
         setLoading(false);
       })
       .catch((error) => {

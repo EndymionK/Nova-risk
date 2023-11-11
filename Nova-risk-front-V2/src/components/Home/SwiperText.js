@@ -13,9 +13,6 @@ export default function SwiperText() {
   useEffect(() => {
     curiousData()
       .then(response => {
-        console.log("Datos recibidos:", response);
-
-        // Verifica si la respuesta no es undefined
         if (response) {
           setData(response);
         }
@@ -30,12 +27,11 @@ export default function SwiperText() {
   console.log("Datos en el componente:", data);
 
   if (loading) {
-    // Muestra un mensaje de carga mientras los datos se están obteniendo
+
     return <p>Cargando datos...</p>;
   }
 
   if (!data || Object.keys(data).length === 0) {
-    // Muestra un mensaje si los datos no se pudieron obtener o están vacíos
     return <p>No se pudieron cargar los datos.</p>;
   }
 
