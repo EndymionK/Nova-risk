@@ -184,30 +184,31 @@ const StarsListCard = ({ onEdit }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      <Pagination className="justify-content-center">
-        <Pagination.First
-          onClick={() => handlePageChange(1)}
-          disabled={currentPage === 1}
-        />
-        <Pagination.Prev
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        />
-        {renderPaginationItems().map((item, index) => (
-          <React.Fragment key={index}>
-            {item === "ellipsis" ? <Pagination.Ellipsis disabled /> : item}
-          </React.Fragment>
-        ))}
-        <Pagination.Next
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        />
-        <Pagination.Last
-          onClick={() => handlePageChange(totalPages)}
-          disabled={currentPage === totalPages}
-        />
-      </Pagination>
+      <Container>
+        <Pagination className="justify-content-center flex-wrap align-items-center">
+          <Pagination.First
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+          />
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {renderPaginationItems().map((item, index) => (
+            <React.Fragment key={index}>
+              {item === "ellipsis" ? <Pagination.Ellipsis disabled /> : item}
+            </React.Fragment>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+          <Pagination.Last
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
+      </Container>
     </Container>
   );
 };
