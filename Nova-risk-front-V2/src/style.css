@@ -260,7 +260,7 @@ button:focus {
 }
 
 .home-header {
-  padding-top: 80px !important;
+  padding-top: 1rem !important;
 }
 
 .home-section {
@@ -352,7 +352,7 @@ button:focus {
 
 .home-about-description {
   color: white !important;
-  padding-top: 100px !important;
+  padding-top: 1rem !important;
   padding-bottom: 20px !important;
   text-align: center;
 }
@@ -685,7 +685,7 @@ button:focus {
   width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
-  overflow: clip; /* Agregar esta línea para evitar recorte */
+  overflow: clip;
   padding-left: 10%;
   padding-right: 10%;
 
@@ -694,8 +694,8 @@ button:focus {
 .swiper-slide {
   background-position: center;
   background-size: cover;
-  width: 500px;
-  height: 300px;
+  max-width: 500px;
+  min-height: 300px;
   background-color: #1b222c;
   display: flex;
   flex-direction: column;
