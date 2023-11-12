@@ -4,9 +4,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    width: 80%;
     margin: 0 auto;
-    
+    padding-bottom: 2rem;
+    margin-left: 10%;
+    margin-right: 10%;
+    justify-content: center;
 }
 
 .Card {
@@ -24,6 +26,13 @@
     
 }
 
+@media (max-width: 450px) {
+    .ContainerCards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+}
+
 .Astronomer-container {
     border-radius: .5rem;
     background-color: #e0e0e065!important;
@@ -37,7 +46,8 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    max-width: 60%;
+    min-width: min-content;
     margin-left: auto; 
     margin-right: auto;
     gap: 2rem;
@@ -45,9 +55,11 @@
 
 .astronomer-img {
     transform: scaleX(-1);
-    height: auto;
     object-fit: contain;
+    max-width: 80%;
+    min-width: 20%;
 }
+
 
 .Astronomer-text {
     background-color: white;
@@ -55,7 +67,7 @@
     padding: 1rem;
     border-radius: .5rem;
     width: 50%;
-    min-width: 400px;
+    min-width: 30%;
     height: fit-content;
     text-align: center;
     font-size: larger;
@@ -65,4 +77,21 @@
     & p {
         text-align: center;
     }
+}
+
+@media (max-width: 950px) {
+    .Astronomer-text{
+        width: 90%;
+    }
+    
+}
+
+@media (max-width: 950px) {
+    .Astronomer-container  {
+        margin-left: 5%;
+        margin-right: 5%;
+        max-width: 95%;
+        gap: 0%;
+    }
+    
 }
