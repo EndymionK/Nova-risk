@@ -7,7 +7,7 @@ import LoadingPopup from '../LoadingPopup';
 import StarIdentifier from './StarIdentifier';
 import MovementScene from './MovementScene';
 import { Controls } from './Controls';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { OrbitControls } from '@react-three/drei';
 import { isMobile } from 'react-device-detect';
 
@@ -98,7 +98,7 @@ export default function App() {
         </Modal.Header>
         <Modal.Body>
           <p>
-            This 3D scene represents the 1000 stars closest to Earth with a high probability of becoming supernovas.
+            This 3D scene represents the 1000 stars closest to Earth with a high probability of becoming supernovas. 
             {isPC ? (
               <>
                 You can use the W, A, S, D, C and space keys to move freely within the scene and use the cursor to click on a star to

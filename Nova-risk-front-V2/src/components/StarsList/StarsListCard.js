@@ -80,7 +80,22 @@ const StarsListCard = ({ onEdit }) => {
   };
 
   useEffect(() => {
-    loadStarsBySearch();
+    // Función inline en lugar de loadStarsBySearch
+    (async () => {
+      try {
+        const response = await loadStars(currentPage - 1, starsPerPage, searchText);
+        console.log("Respuesta del servicio:", response);
+
+        if (response && response.content) {
+          setStarsPage(response);
+          setLoading(false);
+        } else {
+          console.error("La respuesta del servicio no contiene datos válidos.");
+        }
+      } catch (error) {
+        console.error("Error loading stars:", error);
+      }
+    })();
   }, [currentPage, starsPerPage, searchText]);
 
   const totalPages = Math.ceil(starsPage.totalElements / starsPerPage) || 1;

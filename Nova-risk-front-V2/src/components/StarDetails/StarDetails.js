@@ -9,43 +9,23 @@ import astronomer from "../../Assets/astronomer.png";
 const StarDetails = () => {
   const { id } = useParams();
   const [star, setStar] = useState(null);
-  const [starname, setStarName] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStarById(id)
       .then((response) => {
         console.log("Respuesta del servicio (StarDetails):", response);
         console.log("Datos de la estrella:", response);
-  
+
         if (response && response) {
           setStar(response);
-  
-          const starIdentifierValue = getStarIdentifierValue(response);
-          setStarName(starIdentifierValue || "Nombre no disponible"); // Manejo de valor undefined
-  
-          setLoading(false);
         } else {
           console.error("La respuesta del servicio no contiene datos válidos (StarDetails).");
-          setLoading(false);
         }
       })
       .catch((error) => {
         console.error("Error loading star details:", error);
-        setLoading(false);
       });
   }, [id]);
-  
-
-  const getStarIdentifierValue = (starData) => {
-    const catalogNames = ["proper", "hip", "hd", "hr", "gl", "bf"];
-    for (const catalog of catalogNames) {
-      if (starData[catalog]) {
-        return starData[catalog];
-      }
-    }
-    return null;
-  };
 
   if (!star) {
     return <LoadingPopup />;
@@ -97,7 +77,7 @@ const StarDetails = () => {
       <section className="Astronomer-section">
         <div className="Astronomer-container">
           <div className="Astronomer-text">
-            <h2 style={{ color: 'purple',fontWeight: 'bold' }}>Star Details</h2>
+            <h2 style={{ color: 'purple', fontWeight: 'bold' }}>Star Details</h2>
 
             <p>
               You have selected a star, and here are some key details about it. Explore the mysteries of the universe through this celestial information.
