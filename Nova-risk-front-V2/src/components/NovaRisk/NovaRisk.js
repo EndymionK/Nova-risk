@@ -70,7 +70,6 @@ export default function App() {
   const [stars, setStars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(true);
-  const { isMobile } = require('react-device-detect');
 
   useEffect(() => {
     loadClosestSupernovae()
@@ -84,16 +83,7 @@ export default function App() {
       });
   }, []);
 
-  const handleButtonClick = () => {
-    // Aquí deberías realizar la solicitud de Pointer Lock
-    // Asegúrate de que esta solicitud se realice en respuesta a un gesto del usuario.
-    // Puedes usar esta función en el manejador de clic del botón u otro evento de usuario.
-    // Solo una solicitud de Pointer Lock por interacción del usuario.
-    // Puedes verificar si el navegador admite Pointer Lock antes de realizar la solicitud.
-    if (isMobile && 'pointerLockElement' in document) {
-      document.body.requestPointerLock();
-    }
-  };
+  const isPC = !isMobile;
 
   return (
     <div className="canvas-container">
@@ -109,15 +99,19 @@ export default function App() {
         <Modal.Body>
           <p>
             This 3D scene represents the 1000 stars closest to Earth with a high probability of becoming supernovas.
-            You can use the W A S D keys to move freely within the scene and use the cursor to click on a star to get
-            more detailed information.
+            {isPC ? (
+              <>
+                You can use the W, A, S, D, C and space keys to move freely within the scene and use the cursor to click on a star to
+                get more detailed information.
+              </>
+            ) : (
+              <>
+                You can move using touch controls. Swipe on the screen to explore the scene and tap on a star for more
+                information.
+              </>
+            )}
           </p>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" centered="true" onClick={handleButtonClick}>
-            Ok
-          </Button>
-        </Modal.Footer>
       </Modal>
 
       <Canvas camera={{ position: [700, 0, 0], far: 2000 }}>
@@ -127,10 +121,10 @@ export default function App() {
           <Star key={index} position={[star.x, star.y, star.z]} ci={star.ci} star={star} />
         ))}
         <MovementScene />
-        {isMobile && 'pointerLockElement' in document ? (
-          <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} zoomSpeed={4} maxDistance={1000} />
-        ) : (
+        {isPC ? (
           <Controls />
+        ) : (
+          <OrbitControls enableZoom={true} enablePan={true} enableRotate={true} zoomSpeed={4} maxDistance={1000} />
         )}
       </Canvas>
     </div>
