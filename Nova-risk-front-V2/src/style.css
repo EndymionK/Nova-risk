@@ -247,7 +247,6 @@ button:focus {
   height: 100%;
   z-index: -1;
   color: rgb(154, 173, 12);
-  background-image: var(--image-gradient), url(./Assets/home-bg.jpg);
 }
 
 .home-bg {
