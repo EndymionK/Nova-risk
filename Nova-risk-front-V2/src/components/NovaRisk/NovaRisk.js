@@ -114,7 +114,7 @@ export default function App() {
         </Modal.Body>
       </Modal>
 
-      <Canvas camera={{ position: [700, 0, 0], far: 2000 }}>
+      <Canvas camera={{ position: [700, 0, 0], far: 3000 }}>
         <ambientLight intensity={4} />
         <pointLight intensity={4} position={[0, 0, 0]} />
         {stars.map((star, index) => (
